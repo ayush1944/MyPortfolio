@@ -9,7 +9,7 @@ const Resume = () => {
   const handleDownload = () => {
     const link = document.createElement('a');
     link.href = '/resume.pdf'; 
-    link.download = 'YourName_Resume.pdf';
+    link.download = 'Ayush_Resume.pdf';
     link.click();
   };
 
@@ -41,10 +41,10 @@ const Resume = () => {
 
   const education = [
     {
-      degree: "Bachelor of Computer Science",
-      school: "University Name",
-      period: "2018 - 2022",
-      description: "Focused on software engineering, data structures, algorithms, and web development technologies."
+      degree: "Bachelor of Elcectronics and Communication Engineering",
+      school: "JSSATE Noida",
+      period: "2022 - 2026",
+      description: ""
     }
   ];
 
@@ -204,10 +204,8 @@ const Resume = () => {
                     'PostgreSQL',
                     'Git & GitHub',
                     'REST APIs',
-                    'GraphQL',
                     'Docker',
                     'AWS',
-                    'Agile/Scrum'
                   ].map((skill, index) => (
                     <motion.div
                       key={skill}
