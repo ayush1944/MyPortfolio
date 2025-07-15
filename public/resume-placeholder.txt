@@ -1,0 +1,27 @@
+RESUME PLACEHOLDER
+
+This is a placeholder file for your resume. 
+
+To complete your portfolio setup:
+
+1. Create a professional PDF resume
+2. Name it "resume.pdf"
+3. Place it in the public/ directory
+4. The download button in the Resume section will automatically work
+
+Your resume should include:
+- Contact information
+- Professional summary
+- Work experience
+- Education
+- Skills (especially MERN stack)
+- Projects
+- Certifications
+
+Make sure your resume is:
+- ATS-friendly (Applicant Tracking System)
+- Well-formatted and professional
+- Tailored for remote/full-stack developer positions
+- Updated with your latest experience and skills
+
+The portfolio is designed to highlight your MERN stack expertise and remote work readiness!
