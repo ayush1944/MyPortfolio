@@ -74,12 +74,12 @@ const Contact = () => {
       value: 'palayush930592@gmail.com',
       href: 'mailto:palayush930592@gmail.com'
     },
-    {
-      icon: <Phone className="w-6 h-6" />,
-      label: 'Phone',
-      value: '+91 9453485323',
-      href: 'tel:+919453485323'
-    },
+    // {
+    //   icon: <Phone className="w-6 h-6" />,
+    //   label: 'Phone',
+    //   value: '+91 ',
+    //   href: 'tel:+'
+    // },
     {
       icon: <MapPin className="w-6 h-6" />,
       label: 'Location',
