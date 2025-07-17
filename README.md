@@ -195,16 +195,6 @@ VITE_ANALYTICS_ID=your-analytics-id
 - **Images**: Use WebP format for better compression
 - **Fonts**: Preloaded for faster rendering
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
