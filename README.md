@@ -2,8 +2,7 @@
 
 A modern, responsive, and feature-rich portfolio website built for Full Stack Developers specializing in the MERN stack. Perfect for showcasing your skills, projects, and attracting remote job opportunities.
 
-![Portfolio Preview](<img width="1470" height="804" alt="Image" src="https://github.com/user-attachments/assets/c8e55f56-b568-431c-9bde-ad85bc5ecabb" />
-)
+![Portfolio Preview]<img width="1470" height="804" alt="Image" src="https://github.com/user-attachments/assets/c8e55f56-b568-431c-9bde-ad85bc5ecabb" />
 
 ## ✨ Features
 
