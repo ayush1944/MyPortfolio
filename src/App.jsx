@@ -21,24 +21,30 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider>
         <ToastProvider>
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-            <CustomCursor />
-            <PageTransition
-              isTransitioning={isTransitioning}
-              onComplete={() => console.log('Transition complete')}
-            />
-            <Navbar />
-            <main id="main-content" role="main">
-              <Hero />
-              <About />
-              <TechStack />
-              <Projects />
-              {/* <Blog /> */}
-              <Resume />
-              <Contact />
-            </main>
-            <Footer />
-          </div>
+          <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300 overflow-x-hidden relative">
+  <CustomCursor />
+  <PageTransition
+    isTransitioning={isTransitioning}
+    onComplete={() => console.log('Transition complete')}
+  />
+  <Navbar />
+
+  {/* Content Container */}
+  <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <main id="main-content" role="main">
+      <Hero />
+      <About />
+      <TechStack />
+      <Projects />
+      {/* <Blog /> */}
+      <Resume />
+      <Contact />
+    </main>
+  </div>
+
+  <Footer />
+</div>
+
         </ToastProvider>
       </ThemeProvider>
     </ErrorBoundary>

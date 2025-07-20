@@ -62,7 +62,7 @@ const Navbar = () => {
             className="text-2xl font-bold text-gradient cursor-pointer"
             onClick={() => scrollToSection('#home')}
           >
-            &lt;Avatar /&gt;
+            &lt;Ayush /&gt;
           </motion.div>
 
           {/* Desktop Navigation */}
