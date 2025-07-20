@@ -41,7 +41,8 @@ const Resume = () => {
 
   const education = [
     {
-      degree: "Bachelor of Elcectronics and Communication Engineering",
+      degree: "Bachelor of Technology",
+      Branch: "Electronics and communications",
       school: "JSSATE Noida",
       period: "2022 - 2026",
       description: ""

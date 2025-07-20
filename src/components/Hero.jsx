@@ -25,8 +25,8 @@ const Hero = () => {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       {/* Animated Background Effects */}
-      <AnimatedBackground intensity={0.8} />
-      <FloatingElements count={12} interactive={true} />
+      {/* <AnimatedBackground intensity={0.8} />
+      <FloatingElements count={12} interactive={true} /> */}
 
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
