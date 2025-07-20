@@ -29,10 +29,10 @@ const Hero = () => {
       <FloatingElements count={12} interactive={true} /> */}
 
       {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+      {/* <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-primary-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-      </div>
+      </div> */}
 
       <div className="container-custom relative z-10">
         <div className="text-center">

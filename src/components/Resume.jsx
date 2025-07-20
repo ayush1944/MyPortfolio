@@ -161,7 +161,7 @@ const Resume = () => {
                     className="card p-6"
                   >
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">
-                      {edu.degree}
+                      {edu.degree} ({edu.Branch})
                     </h4>
                     <p className="text-primary-600 dark:text-primary-400 font-medium mb-2">
                       {edu.school}
