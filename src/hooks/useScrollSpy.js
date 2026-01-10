@@ -7,7 +7,6 @@ export const useScrollSpy = (sectionIds, offset = 100) => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + offset;
 
-      // Find the section that is currently in view
       for (let i = sectionIds.length - 1; i >= 0; i--) {
         const section = document.getElementById(sectionIds[i]);
         if (section && section.offsetTop <= scrollPosition) {
@@ -17,7 +16,6 @@ export const useScrollSpy = (sectionIds, offset = 100) => {
       }
     };
 
-    // Set initial active section
     handleScroll();
 
     window.addEventListener('scroll', handleScroll);

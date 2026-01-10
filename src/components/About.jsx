@@ -1,32 +1,57 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Code, Coffee, Lightbulb, Target } from 'lucide-react';
-import { fadeInUp, slideInLeft, slideInRight, useScrollAnimation } from '../utils/animations';
+import React from "react";
+import { motion } from "framer-motion";
+import {
+  fadeInUp,
+  slideInLeft,
+  slideInRight,
+  useScrollAnimation,
+} from "../utils/animations";
 
 const About = () => {
   const scrollAnimation = useScrollAnimation();
 
   const highlights = [
     {
-      icon: <Code className="w-6 h-6" />,
+      icon: (
+        <img
+          src="/icons/cleanCode.png"
+          className="w-12 object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      ),
       title: "Clean Code",
-      description: "Writing maintainable, scalable, and well-documented code"
+      description: "Maintainable, readable code with clear structure and separation of concerns.",
     },
     {
-      icon: <Coffee className="w-6 h-6" />,
+      icon: (
+        <img
+          src="/icons/problemSolver.png"
+          className="w-12 object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      ),
       title: "Problem Solver",
-      description: "Passionate about tackling complex challenges with creative solutions"
+      description:
+        "Enjoy breaking down complex problems and turning ideas into working solutions.",
     },
     {
-      icon: <Lightbulb className="w-6 h-6" />,
+      icon: (
+        <img
+          src="/icons/goal.png"
+          className="w-12 object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      ),
       title: "Continuous Learning",
-      description: "Always exploring new technologies and best practices"
+      description: "Always improving through real projects, debugging, and exploring new tools.",
     },
     {
-      icon: <Target className="w-6 h-6" />,
+      icon: (
+        <img
+          src="/icons/learning.png"
+          className="w-12 object-cover group-hover:scale-110 transition-transform duration-500"
+        />
+      ),
       title: "Goal Oriented",
-      description: "Focused on delivering results and exceeding expectations"
-    }
+      description: "Focused on delivering features that actually matter to users.",
+    },
   ];
 
   return (
@@ -41,12 +66,11 @@ const About = () => {
             About Me
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Passionate developer with a love for creating digital solutions that make a difference
+            Developer focused on building real products, not just projects.
           </p>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Column - Text Content */}
           <motion.div
             {...scrollAnimation}
             variants={slideInLeft}
@@ -54,33 +78,39 @@ const About = () => {
           >
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Hello! I'm a passionate Full Stack Developer with a strong foundation in the MERN stack 
-                and a deep love for JavaScript. My journey in web development started with curiosity about 
-                how websites work, and it has evolved into a career focused on creating meaningful digital experiences.
+                I’m a full-stack developer with hands-on experience building
+                end-to-end web applications using the MERN stack and modern
+                tools like Next.js and TypeScript.
               </p>
-              
+              <br />
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                I specialize in building modern, responsive web applications using React, Node.js, Express, 
-                and MongoDB. My approach combines clean, efficient code with user-centered design principles 
-                to deliver solutions that are both functional and delightful to use.
+                My journey into web development started with curiosity, but it
+                quickly turned into a habit of learning by building from
+                e-commerce platforms and real-time collaboration tools to URL
+                shorteners and finance dashboards. I enjoy working across the
+                stack, designing clean APIs, managing databases, and building
+                intuitive user interfaces.
               </p>
-              
+              <br />
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                Currently, I'm actively seeking remote opportunities where I can contribute to innovative 
-                projects, collaborate with talented teams, and continue growing as a developer. I'm particularly 
-                interested in roles that challenge me to learn new technologies and work on impactful solutions.
+                I care deeply about code quality, scalability, and user
+                experience. I prefer writing simple, readable code, and I’m
+                always refining my understanding of system design, backend
+                architecture, and performance.
               </p>
             </div>
 
             <div className="flex flex-wrap gap-3 pt-4">
-              {['Remote Work', 'Team Collaboration', 'Open Source'].map((tag) => (
-                <span
-                  key={tag}
-                  className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium"
-                >
-                  {tag}
-                </span>
-              ))}
+              {["Remote Work", "Team Collaboration", "Open Source"].map(
+                (tag) => (
+                  <span
+                    key={tag}
+                    className="px-3 py-1 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium"
+                  >
+                    {tag}
+                  </span>
+                )
+              )}
             </div>
           </motion.div>
 
@@ -97,7 +127,7 @@ const About = () => {
                 transition={{ delay: index * 0.1 }}
                 className="card p-6 text-center hover:scale-105 transition-transform duration-300"
               >
-                <div className="inline-flex items-center justify-center w-12 h-12 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-lg mb-4">
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-lg mb-4">
                   {item.icon}
                 </div>
                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
@@ -110,7 +140,6 @@ const About = () => {
             ))}
           </motion.div>
         </div>
-
         {/* Stats Section */}
         <motion.div
           {...scrollAnimation}
@@ -118,10 +147,10 @@ const About = () => {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {[
-            { number: '1+', label: 'Years Experience' },
-            { number: '5+', label: 'Projects Completed' },
-            { number: '10+', label: 'Technologies Known' },
-            { number: '100%', label: 'Commitment to Learning' }
+            { number: "1+", label: "Years of Hands-on Development"},
+            { number: "5+", label: "Real-World Projects Built" },
+            { number: "10+", label: "Technologies Used" },
+            { number: "100%", label: "Commitment to Learning & Growth" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}

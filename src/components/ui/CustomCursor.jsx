@@ -18,24 +18,24 @@ const CustomCursor = () => {
 
     const handleMouseEnter = (e) => {
       const target = e.target;
-      if (target.matches('button, a, [role="button"], .cursor-pointer, [onclick]')) {
+      if (target instanceof Element && target.matches('button, a, [role="button"], .cursor-pointer, [onclick]')) {
         setIsHovering(true);
-        setCursorVariant('pointer');
-      } else if (target.matches('input, textarea, select')) {
+        setCursorVariant("pointer");
+      } else if (target instanceof Element && target.matches("input, textarea, select")) {
         setIsHovering(true);
-        setCursorVariant('input');
-      } else if (target.matches('h1, h2, h3, h4, h5, h6')) {
+        setCursorVariant("input");
+      } else if (target instanceof Element && target.matches("h1, h2, h3, h4, h5, h6")) {
         setIsHovering(true);
-        setCursorVariant('text');
+        setCursorVariant("text");
+      } else {
+        setIsHovering(false);
+        setCursorVariant("default");
       }
     };
 
-    const handleMouseLeave = (e) => {
-      const target = e.target;
-      if (target.matches('button, a, [role="button"], .cursor-pointer, [onclick], input, textarea, select, h1, h2, h3, h4, h5, h6')) {
-        setIsHovering(false);
-        setCursorVariant('default');
-      }
+    const handleMouseLeave = () => {
+      setIsHovering(false);
+      setCursorVariant('default');
     };
 
     const handleMouseDown = () => setIsClicking(true);
@@ -110,7 +110,7 @@ const CustomCursor = () => {
         style={{
           transform: 'translate(-50%, -50%)',
           ...cursorVariants[cursorVariant],
-          opacity: isClicking ? 0.5 : 1,
+          opacity: isClicking ? 0.5 : 1, // Adjust opacity when clicking
         }}
       >
         {/* Pointer Icon for clickable elements */}
@@ -126,7 +126,7 @@ const CustomCursor = () => {
           className="fixed pointer-events-none z-[9999] w-1 h-1 bg-primary-600 rounded-full"
           style={{
             transform: 'translate(-50%, -50%)',
-            opacity: isClicking ? 0.8 : 1,
+            opacity: isClicking ? 0.8 : 1, // Adjust opacity when clicking
           }}
         />
       )}

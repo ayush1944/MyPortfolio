@@ -10,7 +10,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { isDark, toggleTheme } = useTheme();
-  const activeSection = useScrollSpy(['home', 'about', 'skills', 'projects', 'blog', 'contact']);
+  const activeSection = useScrollSpy(['home', 'about', 'skills', 'projects', 'contact']);
   const mobileMenuRef = useRef(null);
 
   useFocusTrap(isOpen, mobileMenuRef);
@@ -28,7 +28,6 @@ const Navbar = () => {
     { name: 'About', href: '#about', id: 'about' },
     { name: 'Skills', href: '#skills', id: 'skills' },
     { name: 'Projects', href: '#projects', id: 'projects' },
-    // { name: 'Blog', href: '#blog', id: 'blog' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];
 
@@ -62,7 +61,7 @@ const Navbar = () => {
             className="text-2xl font-bold text-gradient cursor-pointer"
             onClick={() => scrollToSection('#home')}
           >
-            &lt;Ayush /&gt;
+            &lt;Avatar.Tech /&gt;
           </motion.div>
 
           {/* Desktop Navigation */}

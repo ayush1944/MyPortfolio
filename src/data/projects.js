@@ -2,7 +2,13 @@ export const projects = [
   {
     id: 1,
     title: "NakliZon",
-    description: "A full-stack e-commerce platform built with MERN stack featuring user authentication, payment integration, and admin dashboard.",
+    description:
+      "Built a full-stack e-commerce platform with authentication, payments, and an admin dashboard.",
+    highlights: [
+      "JWT-based authentication and role-based access",
+      "Stripe payment integration",
+      "Admin dashboard for product and order management"
+    ],
     image: "/projects/naklizon.png",
     technologies: ["React", "Node.js", "MongoDB", "Express", "Stripe", "JWT"],
     githubUrl: "https://github.com/ayush1944/NakliZon",
@@ -13,9 +19,15 @@ export const projects = [
   {
     id: 2,
     title: "Kabutar.io",
-    description: "Kabutar.io is a collaborative project management platform designed to help users create, organize, and work together on projects seamlessly. With a focus on real-time collaboration and efficient user management, Kabutar provides a modern web-based environment for teams to communicate, manage files, and coordinate tasks.",
+    description:
+      "A real-time collaboration and project management platform for teams.",
+    highlights: [
+      "Live collaboration using Socket.io",
+      "Secure authentication and user roles",
+      "Scalable APIs for tasks and projects"
+    ],
     image: "/projects/kabutar.png",
-    technologies: ["React","Axios", "Socket.io", "Node.js", "MongoDB", "Tailwind CSS"],
+    technologies: ["React", "Node.js", "MongoDB", "Socket.io", "Axios", "Tailwind CSS"],
     githubUrl: "https://github.com/ayush1944/Kabutar",
     liveUrl: "https://kabutar-beta.vercel.app",
     featured: true,
@@ -24,9 +36,15 @@ export const projects = [
   {
     id: 3,
     title: "Perfintra",
-    description: "Perfintra is a personal finance management web application built using React, Node.js, and MongoDB. Features include user authentication, expense tracking, budget planning, and financial insights with interactive charts.",
+    description:
+      "A personal finance management app to track expenses and visualize spending.",
+    highlights: [
+      "Expense tracking and budgeting features",
+      "Backend APIs and data modeling",
+      "Interactive dashboards with charts"
+    ],
     image: "/projects/perfintra.png",
-    technologies: ["React", "Node.js", "MongoDB", "Chart.js", "Express"],
+    technologies: ["React", "Node.js", "MongoDB", "Express", "Chart.js"],
     githubUrl: "https://github.com/ayush1944/Perfintra",
     liveUrl: "https://perfintra-beta.vercel.app/",
     featured: false,
@@ -35,7 +53,13 @@ export const projects = [
   {
     id: 4,
     title: "Chota Link",
-    description: "Chota Link is a URL shortening and management web application built using React, Node.js, and MongoDB. Features include user authentication, custom URL shortening, analytics, and a RESTful API.",
+    description:
+      "A URL shortening and link management platform with analytics.",
+    highlights: [
+      "Short URL generation and redirects",
+      "JWT-based authentication",
+      "Dashboard for managing and tracking links"
+    ],
     image: "/projects/chotalink.png",
     technologies: ["React", "Node.js", "MongoDB", "Express", "JWT"],
     githubUrl: "https://github.com/ayush1944/ChotaLink",
@@ -46,9 +70,15 @@ export const projects = [
   {
     id: 5,
     title: "Weather App",
-    description: "A weather application that provides current weather conditions and forecasts for various locations. Built with HTML, CSS and JS with OpenWeatherMap API.",
+    description:
+      "A frontend weather app fetching real-time data from external APIs.",
+    highlights: [
+      "API integration with OpenWeatherMap",
+      "Error handling and loading states",
+      "Responsive UI with vanilla JS"
+    ],
     image: "/projects/weather.png",
-    technologies: ["HTML", "CSS", "JS", "OpenWeatherMap API"],
+    technologies: ["HTML", "CSS", "JavaScript", "OpenWeatherMap API"],
     githubUrl: "https://github.com/ayush1944/WeatherApp",
     liveUrl: "https://ayush1944.github.io/WeatherApp/",
     featured: false,
@@ -57,9 +87,15 @@ export const projects = [
   {
     id: 6,
     title: "Indian Premier League",
-    description: "A web application for Indian Premier League (IPL) cricket fans to stay updated with match schedules, player stats, and team standings. Built with HTML, CSS, and JS. with GSAP for animations.",
+    description:
+      "An interactive frontend application for IPL fans.",
+    highlights: [
+      "Smooth animations using GSAP",
+      "Vanilla JavaScript frontend logic",
+      "Focus on UX and performance"
+    ],
     image: "/projects/ipl.png",
-    technologies: ["HTML", "CSS", "JS", "GSAP"],
+    technologies: ["HTML", "CSS", "JavaScript", "GSAP"],
     githubUrl: "https://github.com/ayush1944/IPL",
     liveUrl: "https://ayush1944.github.io/IPL/",
     featured: false,

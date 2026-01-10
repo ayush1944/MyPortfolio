@@ -30,7 +30,7 @@ const Toast = ({ toast, onRemove }) => {
       initial={{ opacity: 0, y: 50, scale: 0.3 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       exit={{ opacity: 0, scale: 0.5, transition: { duration: 0.2 } }}
-      className={`flex items-start gap-3 p-4 rounded-lg border shadow-lg backdrop-blur-sm ${styles[toast.type]}`}
+      className={`pointer-events-auto flex items-start gap-3 p-4 rounded-lg border shadow-lg backdrop-blur-sm ${styles[toast.type]}`}
     >
       <div className="flex-shrink-0 mt-0.5">
         {icons[toast.type]}
@@ -88,7 +88,7 @@ export const ToastProvider = ({ children }) => {
       {children}
       
       {/* Toast Container */}
-      <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm w-full">
+      <div className="fixed top-4 right-4 z-50 space-y-2 max-w-sm w-full  pointer-events-none">
         <AnimatePresence>
           {toasts.map((toast) => (
             <Toast key={toast.id} toast={toast} onRemove={removeToast} />

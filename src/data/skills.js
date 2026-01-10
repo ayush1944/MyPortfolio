@@ -1,73 +1,73 @@
 export const skills = [
   {
     name: "MongoDB",
-    icon: "🍃",
+    icon: "/skills/mongodb.png",
     category: "Database",
     level: 85
   },
   {
     name: "Express.js",
-    icon: "⚡",
+    icon: "/skills/expressjs.png",
     category: "Backend",
     level: 90
   },
   {
     name: "React",
-    icon: "⚛️",
+    icon: "/skills/react.png",
     category: "Frontend",
     level: 95
   },
   {
     name: "Node.js",
-    icon: "🟢",
+    icon: "/skills/nodejs.png",
     category: "Backend",
     level: 88
   },
   {
     name: "JavaScript",
-    icon: "🟨",
+    icon: "/skills/javascript.png",
     category: "Language",
     level: 92
   },
   {
     name: "TypeScript",
-    icon: "🔷",
+    icon: "/skills/typescript.png",
     category: "Language",
     level: 80
   },
   {
     name: "Git",
-    icon: "📚",
+    icon: "/skills/git.png",
     category: "Tools",
     level: 85
   },
   {
     name: "Docker",
-    icon: "🐳",
+    icon: "/skills/docker.png",
     category: "DevOps",
     level: 75
   },
   {
     name: "REST APIs",
-    icon: "🔗",
+    icon: "/skills/restAPI.png",
     category: "Backend",
     level: 90
   },
   {
     name: "Tailwind CSS",
-    icon: "🎨",
+    icon: "/skills/tailwindcss.png",
     category: "Frontend",
     level: 88
   },
   {
     name: "Next.js",
-    icon: "▲",
+    icon: "/skills/nextjs.png",
     category: "Framework",
     level: 82
   },
   {
     name: "PostgreSQL",
-    icon: "🐘",
+    icon: "/skills/postgreSQL.png",
     category: "Database",
     level: 78
   }
