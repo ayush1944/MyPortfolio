@@ -63,7 +63,7 @@ const Footer = () => {
                 className="mb-6"
               >
                 <h3 className="text-2xl font-bold text-gradient mb-4">
-                  &lt;Ayush /&gt;
+                  &lt;Avatar /&gt;
                 </h3>
                 <p className="text-gray-400 leading-relaxed max-w-md">
                   Full Stack Developer passionate about creating exceptional digital experiences. 

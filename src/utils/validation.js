@@ -29,6 +29,5 @@ export const validateForm = (formData) => {
   };
 };
 
-export const sanitizeInput = (input) => {
-  return input.trim().replace(/[<>]/g, '');
-};
+export const sanitizeInput = (input = "") =>
+  input.replace(/[<>]/g, "").trim();

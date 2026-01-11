@@ -21,7 +21,6 @@ function App() {
             <Navbar />
 
             {/* Content Container */}
-            {/* <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"> */}
             <main id="main-content" role="main">
               <Hero />
               <About />
@@ -31,8 +30,6 @@ function App() {
               <Resume />
               <Contact />
             </main>
-            {/* </div> */}
-
             <Footer />
           </div>
         </ToastProvider>

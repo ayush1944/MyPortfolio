@@ -1,10 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import {
-  Mail,
-  MapPin,
-  Send
-} from "lucide-react";
+import { Mail, MapPin, Send } from "lucide-react";
 import { validateForm, sanitizeInput } from "../utils/validation";
 import {
   fadeInUp,
@@ -28,11 +24,15 @@ const Contact = () => {
 
   const scrollAnimation = useScrollAnimation();
 
+  const API_URL =
+  import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: sanitizeInput(value),
+      [name]: value,
     }));
 
     // Clear error when user starts typing
@@ -47,21 +47,32 @@ const Contact = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validation = validateForm(formData);
+    const sanitizedFormData = {
+      ...formData,
+      name: sanitizeInput(formData.name),
+      email: sanitizeInput(formData.email),
+      subject: sanitizeInput(formData.subject),
+      message: sanitizeInput(formData.message),
+    };
+
+    const validation = validateForm(sanitizedFormData);
     if (!validation.isValid) {
       setErrors(validation.errors);
       return;
     }
 
     setIsSubmitting(true);
-    setErrors({});
 
+    setErrors({});
     try {
       // Simulate form submission
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // In a real application, you would send the form data to your backend
-      console.log("Form submitted:", formData);
+      await fetch(`${API_URL}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(sanitizedFormData),
+      });
 
       toast.success("Message sent successfully! I'll get back to you soon.", {
         title: "Success!",
@@ -161,6 +172,12 @@ const Contact = () => {
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
             Ready to start your next project? Let's discuss how we can work
             together
+          </p>
+
+          <p className="text-sm text-gray-500 dark:text-gray-500 max-w-2xl mx-auto">
+            This contact form is powered by a production Express API that stores
+            messages in PostgreSQL (Supabase) and sends real-time notifications
+            and auto-reply emails using Resend.
           </p>
         </motion.div>
 
@@ -324,6 +341,7 @@ const Contact = () => {
                     id="message"
                     name="message"
                     rows={6}
+                    type="text"
                     value={formData.message}
                     onChange={handleChange}
                     className={`input-field resize-none ${
