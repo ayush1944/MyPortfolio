@@ -10,6 +10,7 @@ export const projects = [
       "Re-refine workflow allowing users to iteratively improve responses without losing context",
       "Clean and minimal UI focused on real usability, not just AI demos",
       "Copy, reset, and re-run flows designed to mimic real-world writing workflows",
+      "Versioned prompts and UI flows designed to support future multi-model AI integrations",
     ],
     image: "/projects/prefyne.png",
     technologies: [
