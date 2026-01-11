@@ -1,4 +1,5 @@
 # Full-Stack Developer Portfolio
+<img width="800" height="500" alt="Image" src="https://github.com/user-attachments/assets/a2813b3a-a9fa-43e9-ac70-1867bcdf041f" />
 
 A production-ready personal portfolio built to showcase real-world full-stack engineering skills.  
 This project goes beyond static UI — it includes a deployed backend, working contact API, email notifications, and clean frontend architecture.
@@ -23,7 +24,6 @@ This is how real applications work.
 
 ---
 
-<img width="1470" height="804" alt="Image" src="https://github.com/user-attachments/assets/c8e55f56-b568-431c-9bde-ad85bc5ecabb" />
 
 ## Key Features
 
@@ -140,8 +140,8 @@ Add your files to the `public/` directory:
 
 - MIT — feel free to fork, adapt, and build your own version.
 
-👋 Author
+## 👋 Author
 
-Ayush Pal
-Full-Stack Developer (MERN / React / Backend APIs)
-Open to remote roles and startup opportunities
+###Ayush Pal
+- Full-Stack Developer (MERN / React / Backend APIs)
+- Open to remote roles and startup opportunities
