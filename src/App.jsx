@@ -26,7 +26,6 @@ function App() {
               <About />
               <TechStack />
               <Projects />
-              {/* <Blog /> */}
               <Resume />
               <Contact />
             </main>

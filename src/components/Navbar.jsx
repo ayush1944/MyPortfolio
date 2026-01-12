@@ -4,7 +4,6 @@ import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 import { useFocusTrap } from '../hooks/useKeyboardNavigation';
-import SkipLink from './ui/SkipLink';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,8 +25,8 @@ const Navbar = () => {
   const navItems = [
     { name: 'Home', href: '#home', id: 'home' },
     { name: 'About', href: '#about', id: 'about' },
-    { name: 'Skills', href: '#skills', id: 'skills' },
     { name: 'Projects', href: '#projects', id: 'projects' },
+    { name: 'Resume', href: '#resume', id: 'resume' },
     { name: 'Contact', href: '#contact', id: 'contact' },
   ];
 
@@ -41,7 +40,6 @@ const Navbar = () => {
 
   return (
     <>
-      <SkipLink />
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
