@@ -19,7 +19,8 @@ const About = () => {
         />
       ),
       title: "Clean Code",
-      description: "Maintainable, readable code with clear structure and separation of concerns.",
+      description:
+        "Maintainable, readable code with clear structure and separation of concerns.",
     },
     {
       icon: (
@@ -40,7 +41,8 @@ const About = () => {
         />
       ),
       title: "Continuous Learning",
-      description: "Always improving through real projects, debugging, and exploring new tools.",
+      description:
+        "Always improving through real projects, debugging, and exploring new tools.",
     },
     {
       icon: (
@@ -50,7 +52,8 @@ const About = () => {
         />
       ),
       title: "Goal Oriented",
-      description: "Focused on delivering features that actually matter to users.",
+      description:
+        "Focused on delivering features that actually matter to users.",
     },
   ];
 
@@ -66,7 +69,8 @@ const About = () => {
             About Me
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Developer focused on building real products, not just projects.
+            Full-stack developer focused on building real, production-ready
+            products.
           </p>
         </motion.div>
 
@@ -78,25 +82,22 @@ const About = () => {
           >
             <div className="prose prose-lg dark:prose-invert max-w-none">
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                I’m a full-stack developer with hands-on experience building
-                end-to-end web applications using the MERN stack and modern
-                tools like Next.js and TypeScript.
+                I’m a full-stack developer building end-to-end web applications
+                using the MERN stack, Next.js, and TypeScript.
               </p>
               <br />
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                My journey into web development started with curiosity, but it
-                quickly turned into a habit of learning by building from
-                e-commerce platforms and real-time collaboration tools to URL
-                shorteners and finance dashboards. I enjoy working across the
-                stack, designing clean APIs, managing databases, and building
-                intuitive user interfaces.
+                My journey into web development started with curiosity and
+                quickly turned into learning by building e-commerce platforms,
+                real-time collaboration tools, URL shorteners, and finance
+                dashboards.
               </p>
               <br />
               <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
                 I care deeply about code quality, scalability, and user
-                experience. I prefer writing simple, readable code, and I’m
-                always refining my understanding of system design, backend
-                architecture, and performance.
+                experience. I prefer writing simple, readable code and
+                continuously refine my understanding of backend architecture,
+                system design, and performance.
               </p>
             </div>
 
@@ -109,7 +110,7 @@ const About = () => {
                   >
                     {tag}
                   </span>
-                )
+                ),
               )}
             </div>
           </motion.div>
@@ -147,10 +148,11 @@ const About = () => {
           className="mt-20 grid grid-cols-2 md:grid-cols-4 gap-8"
         >
           {[
-            { number: "1+", label: "Years of Hands-on Development"},
+            { number: "1+", label: "Years of Hands-on Development" },
             { number: "5+", label: "Real-World Projects Built" },
             { number: "10+", label: "Technologies Used" },
-            { number: "100%", label: "Commitment to Learning & Growth" },
+            // { number: "100%", label: "Commitment to Learning & Growth" },
+            { number: "Always", label: "Learning Through Real Projects" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}

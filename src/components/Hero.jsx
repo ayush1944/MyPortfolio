@@ -8,9 +8,9 @@ import RevealAnimation, { TextReveal } from "./animations/RevealAnimation";
 const Hero = () => {
   const roles = [
     "Full-Stack Developer (MERN • Next.js)",
-    "JavaScript Enthusiast",
-    "Open Source Contributor",
-    "Problem Solver",
+    "Product-Oriented Engineer",
+    "Backend & API Developer",
+    "AI & SaaS Builder",
   ];
   const currentRole = useTypingEffect(roles, 100, 50, 2000);
 
@@ -60,11 +60,8 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
             className="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed"
           >
-            Full-stack developer specializing in MERN & Next.js. I build
-            scalable web apps with real users, real auth, real payments, and
-            clean backend architecture. Currently looking for remote roles where
-            I can ship fast, learn deeply, and grow with a strong engineering
-            team.
+            I build production-ready web applications with MERN and Next.js —
+            focused on clean backend APIs, real users, and real-world impact.
           </motion.p>
 
           {/* CTA Buttons */}
