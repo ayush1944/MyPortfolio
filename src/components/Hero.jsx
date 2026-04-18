@@ -1,172 +1,225 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { ArrowDown, Mail } from "lucide-react";
-import { fadeInUp, slideInLeft, slideInRight } from "../utils/animations";
-import { useTypingEffect } from "../hooks/useTypingEffect";
-import RevealAnimation, { TextReveal } from "./animations/RevealAnimation";
+import { useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import gsap from 'gsap';
+import { useTypingEffect } from '../hooks/useTypingEffect';
+import { useTheme } from '../contexts/ThemeContext';
+
+const ROLES = [
+  'AI Automation Engineer',
+  'Full-Stack Developer',
+  'MERN · Next.js · TypeScript',
+  'AI & SaaS Builder',
+  'Backend & API Engineer',
+];
+
+const MouseScrollIcon = ({ isDark }) => {
+  const dotRef = useRef(null);
+
+  useEffect(() => {
+    if (!dotRef.current) return;
+    gsap.to(dotRef.current, {
+      y: 10, repeat: -1, yoyo: true, duration: 1.1,
+      ease: 'power1.inOut', delay: 1.8,
+    });
+  }, []);
+
+  const stroke = isDark ? 'rgba(107,107,107,0.6)' : 'rgba(80,60,20,0.4)';
+  const fill   = isDark ? '#6b6b6b' : '#907050';
+
+  return (
+    <div className="flex flex-col items-center gap-2">
+      <div style={{ position: 'relative', width: 22, height: 34 }}>
+        <svg width="22" height="34" viewBox="0 0 22 34" fill="none">
+          <rect x="1" y="1" width="20" height="32" rx="10" stroke={stroke} strokeWidth="1.5" />
+          <line x1="11" y1="1" x2="11" y2="17" stroke={stroke} strokeWidth="1" strokeOpacity="0.3" />
+        </svg>
+        <div
+          ref={dotRef}
+          style={{
+            position: 'absolute', left: '50%', top: 7,
+            width: 4, height: 4, borderRadius: '50%',
+            background: fill, transform: 'translateX(-50%)',
+          }}
+        />
+      </div>
+      <span className="font-mono text-[10px] tracking-widest uppercase" style={{ color: 'var(--color-muted)' }}>
+        Scroll
+      </span>
+    </div>
+  );
+};
 
 const Hero = () => {
-  const roles = [
-    "Full-Stack Developer (MERN • Next.js)",
-    "Product-Oriented Engineer",
-    "Backend & API Developer",
-    "AI & SaaS Builder",
-  ];
-  const currentRole = useTypingEffect(roles, 100, 50, 2000);
+  const { isDark } = useTheme();
+  const currentRole = useTypingEffect(ROLES, 80, 40, 2200);
+  const labelRef = useRef(null);
 
-  const scrollToProjects = () => {
-    document.querySelector("#projects")?.scrollIntoView({ behavior: "smooth" });
-  };
+  useEffect(() => {
+    const el = labelRef.current;
+    if (!el) return;
+    const text = el.getAttribute('data-text') || '';
+    el.innerHTML = text
+      .split('')
+      .map((ch) =>
+        `<span style="display:inline-block;opacity:0;transform:translateY(10px)">${ch === ' ' ? '&nbsp;' : ch}</span>`
+      )
+      .join('');
+    gsap.to(el.querySelectorAll('span'), {
+      opacity: 1, y: 0, duration: 0.4, stagger: 0.022,
+      ease: 'power3.out', delay: 0.35,
+    });
+  }, []);
 
-  const scrollToContact = () => {
-    document.querySelector("#contact")?.scrollIntoView({ behavior: "smooth" });
-  };
+  const scrollToProjects = () => document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToContact  = () => document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+
+  const gridLines = isDark
+    ? `linear-gradient(rgba(255,255,255,0.014) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.014) 1px,transparent 1px)`
+    : `linear-gradient(rgba(0,0,0,0.028) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,0.028) 1px,transparent 1px)`;
 
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800"
+      className="min-h-screen relative flex flex-col justify-center"
+      style={{ background: 'transparent', backgroundImage: gridLines, backgroundSize: '60px 60px' }}
     >
-      <div className="container-custom relative z-10">
-        <div className="text-center">
-          <motion.div {...slideInLeft} className="mb-6">
-            <span className="hidden sm:flex px-4 py-2 w-fit mx-auto bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full text-sm font-medium">
-              👋 Hello, I'm
-            </span>
-          </motion.div>
+      <div className="container-custom w-full" style={{ position: 'relative', zIndex: 2 }}>
 
-          {/* Name */}
-          <RevealAnimation direction="up" delay={0.2}>
-            <TextReveal className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
-              Ayush
-            </TextReveal>
-          </RevealAnimation>
+        {/* Section label */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
+          <span
+            ref={labelRef}
+            data-text="[ AI AUTOMATION · FULL-STACK DEVELOPER ]"
+            className="section-label text-xs"
+            aria-label="AI Automation · Full-Stack Developer"
+          />
+        </motion.div>
 
-          {/* Tagline with Typing Effect */}
-          <motion.p
-            {...fadeInUp}
-            transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto h-16 flex items-center justify-center"
+        {/* Name */}
+        <div className="mt-6">
+          <motion.h1
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.42 }}
+            className="font-display font-extrabold tracking-tighter leading-none"
+            style={{ fontSize: 'clamp(4rem, 13vw, 150px)', color: 'var(--color-ink)' }}
           >
-            <span className="text-gradient font-semibold">
-              {currentRole}
-              <span className="animate-pulse">|</span>
-            </span>
-          </motion.p>
-
-          {/* Description */}
-          <motion.p
-            {...fadeInUp}
-            transition={{ delay: 0.6 }}
-            className="text-lg text-gray-600 dark:text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed"
+            AYUSH
+          </motion.h1>
+          <motion.h1
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.56 }}
+            className="font-display font-extrabold tracking-tighter leading-none"
+            style={{
+              fontSize: 'clamp(4rem, 13vw, 150px)',
+              color: 'var(--color-ink)',
+              marginLeft: 'clamp(1.5rem, 5vw, 80px)',
+            }}
           >
-            I build production-ready web applications with MERN and Next.js —
-            focused on clean backend APIs, real users, and real-world impact.
-          </motion.p>
+            PAL
+          </motion.h1>
+        </div>
 
-          {/* CTA Buttons */}
-          <motion.div
-            {...fadeInUp}
-            transition={{ delay: 0.8 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16"
-          >
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToProjects}
-              className="btn-primary cursor-hover group"
+        {/* Bottom row — badge + role on left, tagline + CTAs + socials on right */}
+        <div className="mt-10 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+
+          {/* Left: badge + typing role */}
+          <div className="flex flex-col gap-3">
+            <motion.div
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, delay: 0.74 }}
+              className="flex items-center gap-2 w-fit"
             >
-              <span className="group-hover:translate-x-1 transition-transform duration-200 ">
-                View My Work
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: 'var(--color-accent)' }} />
+              <span
+                className="font-mono text-xs tracking-wide px-3 py-1.5 rounded-full"
+                style={{
+                  color: 'var(--color-accent)',
+                  border: '1px solid var(--color-accent)',
+                  background: isDark ? 'rgba(107,255,198,0.06)' : 'rgba(0,107,63,0.07)',
+                }}
+              >
+                Open to Work
               </span>
-              <ArrowDown
-                size={20}
-                className="group-hover:translate-y-1 transition-transform duration-200"
-              />
-            </motion.button>
+            </motion.div>
 
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={scrollToContact}
-              className="btn-outline cursor-hover group"
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 0.9 }}
+              className="font-mono text-sm h-6"
+              style={{ color: 'var(--color-accent)' }}
             >
-              <span className="group-hover:translate-x-1 transition-transform duration-200">
-                Get In Touch
-              </span>
-              <Mail
-                size={20}
-                className="group-hover:rotate-12 transition-transform duration-200"
-              />
-            </motion.button>
-          </motion.div>
+              {currentRole}<span className="animate-pulse">_</span>
+            </motion.p>
+          </div>
 
-          {/* Social Links */}
-          <motion.div
-            {...slideInRight}
-            transition={{ delay: 1.0 }}
-            className="flex justify-center space-x-6"
-          >
-            <motion.a
-              whileHover={{ scale: 1.2, y: -2 }}
-              href="https://github.com/ayush1944"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+          {/* Right: tagline + CTAs + socials */}
+          <div className="flex flex-col gap-5 lg:items-end lg:text-right max-w-sm">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.02 }}
+              className="font-sans text-sm leading-relaxed"
+              style={{ color: 'var(--color-muted)' }}
             >
-              <img
-                src="/icons/github.png"
-                className="w-8 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-            </motion.a>
+              Building production-ready web apps &amp; AI automation pipelines — MERN, Next.js, TypeScript.
+            </motion.p>
 
-            <motion.a
-              whileHover={{ scale: 1.2, y: -2 }}
-              href="https://www.linkedin.com/in/ayush-pal-25b628255/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 1.14 }}
+              className="flex flex-wrap gap-3 lg:justify-end"
             >
-              <img
-                src="/icons/linkedIn.png"
-                className="w-8 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-            </motion.a>
+              <button onClick={scrollToProjects} className="btn-primary text-sm">View Work ↓</button>
+              <button onClick={scrollToContact}  className="btn-outline text-sm">Get In Touch</button>
+            </motion.div>
 
-            <motion.a
-              whileHover={{ scale: 1.2, y: -2 }}
-              href="mailto:palayush930592@gmail.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="p-3 bg-white dark:bg-gray-800 rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5, delay: 1.26 }}
+              className="flex gap-5"
             >
-              <img
-                src="/icons/message.png"
-                className="w-8 object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-            </motion.a>
-          </motion.div>
+              {[
+                { label: 'GitHub ↗',   href: 'https://github.com/ayush1944' },
+                { label: 'LinkedIn ↗', href: 'https://www.linkedin.com/in/ayush-pal-25b628255/' },
+                { label: 'Email ↗',    href: 'mailto:palayush930592@gmail.com' },
+              ].map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  target={l.href.startsWith('mailto') ? undefined : '_blank'}
+                  rel="noopener noreferrer"
+                  className="font-mono text-[11px] tracking-widest uppercase transition-colors duration-200"
+                  style={{ color: 'var(--color-muted)' }}
+                  onMouseOver={(e) => (e.currentTarget.style.color = 'var(--color-ink)')}
+                  onMouseOut={(e)  => (e.currentTarget.style.color = 'var(--color-muted)')}
+                >
+                  {l.label}
+                </a>
+              ))}
+            </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
+      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        transition={{ delay: 1.7 }}
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        style={{ zIndex: 3 }}
       >
-        <motion.div
-          animate={{ y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="w-6 h-10 border-2 border-gray-400 dark:border-gray-600 rounded-full flex justify-center"
-        >
-          <motion.div
-            animate={{ y: [0, 12, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-1 h-3 bg-gray-400 dark:bg-gray-600 rounded-full mt-2"
-          />
-        </motion.div>
+        <MouseScrollIcon isDark={isDark} />
       </motion.div>
     </section>
   );

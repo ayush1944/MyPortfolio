@@ -2,135 +2,143 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Design Tokens ─────────────────────────────────────────────── */
+:root {
+  /* Light = warm wheat */
+  --color-bg:      #f5e6c8;
+  --color-surface: #eddcb4;
+  --color-ink:     #1c1508;
+  --color-muted:   #7c6b50;
+  --color-accent:  #1a6b3f;
+  --color-border:  rgba(28, 21, 8, 0.1);
+}
+
+.dark {
+  --color-bg:      #050505;
+  --color-surface: #0f0f0f;
+  --color-ink:     #f0ede8;
+  --color-muted:   #6b6b6b;
+  --color-accent:  #6bffc6;
+  --color-border:  rgba(255, 255, 255, 0.08);
+}
+
+/* ── Base ──────────────────────────────────────────────────────── */
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-y: scroll;
   }
 
   body {
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-ink);
+    overflow-x: hidden;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  /* Grain — dark mode only */
+  .dark body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
   }
 }
 
-/* @layer components {
-  .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-500 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-200 inline-flex items-center gap-2 shadow-lg shadow-primary-600/30 hover:shadow-primary-600/50 hover:-translate-y-0.5;
-  }
-
-  .btn-secondary {
-    @apply bg-white/90 hover:bg-white dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-900 dark:text-gray-100 font-medium py-3 px-6 rounded-xl transition-all duration-200 inline-flex items-center gap-2 border border-gray-200 dark:border-gray-700;
-  }
-
-  .btn-outline {
-    @apply border-2 border-primary-500 text-primary-400 hover:text-white hover:bg-primary-600 font-medium py-3 px-6 rounded-xl transition-all duration-200 inline-flex items-center gap-2 hover:shadow-md hover:shadow-primary-600/30 hover:-translate-y-0.5;
-  }
-
-
-  .section-padding {
-    @apply py-16 md:py-24;
-  }
-
-  .container-custom {
-    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
-
-  .text-gradient {
-    @apply bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent;
-  }
-
-  .card {
-    @apply bg-white rounded-xl shadow-lg;
-  }
-
-  .dark .card {
-    @apply bg-gray-800;
-  }
-
-
-  .input-field {
-    @apply w-full px-4 py-3 rounded-lg border bg-white text-gray-900 placeholder-gray-400 border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors duration-200;
-  }
-
-  .dark .input-field {
-    @apply bg-gray-700 text-white placeholder-gray-400 border-gray-600 focus:ring-primary-400;
-  }
-} */
-
+/* ── Components ────────────────────────────────────────────────── */
 @layer components {
-  /* PRIMARY (minimal filled on hover only) */
+
   .btn-primary {
-    @apply inline-flex items-center gap-2
-    px-6 py-3 rounded-lg
-    font-medium
-    border border-black dark:border-white
-    text-black dark:text-white
-    bg-transparent
-    transition-colors duration-200
-    hover:bg-black hover:text-white
-    dark:hover:bg-white dark:hover:text-black;
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium font-sans transition-all duration-200;
+    border: 1px solid var(--color-accent);
+    color: var(--color-accent);
+    background: transparent;
+  }
+  .btn-primary:hover {
+    background: var(--color-accent);
+    color: var(--color-bg);
   }
 
-  /* SECONDARY (same as primary, slightly muted) */
-  .btn-secondary {
-    @apply inline-flex items-center gap-2
-    px-6 py-3 rounded-lg
-    font-medium
-    border border-black/60 dark:border-white/60
-    text-black/70 dark:text-white/70
-    bg-transparent
-    transition-colors duration-200
-    hover:border-black hover:text-black
-    dark:hover:border-white dark:hover:text-white;
-  }
-
-  /* OUTLINE (pure minimal – no fill ever) */
   .btn-outline {
-    @apply inline-flex items-center gap-2
-    px-6 py-3 rounded-lg
-    font-medium
-    border border-black dark:border-white
-    text-black dark:text-white
-    bg-transparent
-    transition-opacity duration-200
-    hover:opacity-70;
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium font-sans transition-all duration-200;
+    border: 1px solid var(--color-border);
+    color: var(--color-ink);
+    background: transparent;
   }
-  .text-gradient {
-  @apply bg-clip-text text-transparent
-  bg-gradient-to-r
-  from-black to-black
-  dark:from-white dark:to-white;
-}
+  .btn-outline:hover { opacity: 0.7; }
 
-  /* Layout helpers */
-  .section-padding {
-    @apply py-16 md:py-24;
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium font-sans transition-all duration-200;
+    border: 1px solid var(--color-border);
+    color: var(--color-muted);
+    background: transparent;
   }
+  .btn-secondary:hover { color: var(--color-ink); }
 
-  .container-custom {
-    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
-  }
+  .section-padding  { @apply py-24 md:py-32; }
+  .container-custom { @apply max-w-6xl mx-auto px-6 sm:px-8 lg:px-12; }
 
-  /* Cards – minimal */
   .card {
-    @apply bg-white dark:bg-gray-900
-    border border-black/10 dark:border-white/10
-    rounded-xl;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    @apply rounded-xl;
   }
 
-  /* Inputs – modern */
   .input-field {
-    @apply w-full px-4 py-3 rounded-lg
-    bg-transparent
-    border border-black/20 dark:border-white/20
-    text-black dark:text-white
-    placeholder-black/40 dark:placeholder-white/40
-    focus:outline-none
-    focus:border-black dark:focus:border-white
-    transition-colors duration-200;
+    @apply w-full px-0 py-3 bg-transparent border-0 focus:outline-none font-sans transition-colors duration-200;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-ink);
+  }
+  .input-field::placeholder { color: var(--color-muted); }
+  .input-field:focus        { border-bottom-color: var(--color-accent); }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    @apply text-xs tracking-widest uppercase mb-4 block;
+    color: var(--color-muted);
   }
 
-  .btn-minimal {
-  @apply transition-opacity duration-200 hover:opacity-80;
+  .text-accent    { color: var(--color-accent); }
+  .text-gradient  {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(135deg, var(--color-accent), var(--color-ink));
+  }
+
+  .marquee-track   { @apply flex overflow-hidden; }
+  .marquee-content { @apply flex shrink-0 items-center gap-8 animate-marquee; }
+  .marquee-content-reverse { @apply flex shrink-0 items-center gap-8 animate-marquee-reverse; }
+
+  /* Hide native cursor globally */
+  * { cursor: none !important; }
 }
 
+/* ── Custom Scrollbar ──────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 3px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 100px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--color-ink); }
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+}
+
+/* ── Selection ─────────────────────────────────────────────────── */
+::selection {
+  background: var(--color-accent);
+  color: var(--color-bg);
 }

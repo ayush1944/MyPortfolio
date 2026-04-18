@@ -1,373 +1,197 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, MapPin, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { validateForm, sanitizeInput } from "../utils/validation";
-import {
-  fadeInUp,
-  slideInLeft,
-  slideInRight,
-  useScrollAnimation,
-} from "../utils/animations";
+import { fadeInUp, slideInLeft, slideInRight, useScrollAnimation } from "../utils/animations";
 import { useToast } from "./ui/Toast";
-import Button from "./ui/Button";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    subject: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-
   const scrollAnimation = useScrollAnimation();
 
-  const API_URL =
-  import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }));
-    }
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const sanitizedFormData = {
-      ...formData,
+    const sanitized = {
       name: sanitizeInput(formData.name),
       email: sanitizeInput(formData.email),
       subject: sanitizeInput(formData.subject),
       message: sanitizeInput(formData.message),
     };
-
-    const validation = validateForm(sanitizedFormData);
-    if (!validation.isValid) {
-      setErrors(validation.errors);
-      return;
-    }
+    const validation = validateForm(sanitized);
+    if (!validation.isValid) { setErrors(validation.errors); return; }
 
     setIsSubmitting(true);
-
     setErrors({});
     try {
-      // Simulate form submission
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
+      await new Promise((r) => setTimeout(r, 2000));
       await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(sanitizedFormData),
+        body: JSON.stringify(sanitized),
       });
-
-      toast.success("Message sent successfully! I'll get back to you soon.", {
-        title: "Success!",
-      });
+      toast.success("Message sent! I'll get back to you soon.", { title: "Sent!" });
       setFormData({ name: "", email: "", subject: "", message: "" });
-    } catch (error) {
-      toast.error("Something went wrong. Please try again.", {
-        title: "Error",
-      });
+    } catch {
+      toast.error("Something went wrong. Please try again.", { title: "Error" });
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const contactInfo = [
-    {
-      icon: <Mail className="w-6 h-6" />,
-      label: "Email",
-      value: "palayush930592@gmail.com",
-      href: "mailto:palayush930592@gmail.com",
-    },
-    // {
-    //   icon: <Phone className="w-6 h-6" />,
-    //   label: 'Phone',
-    //   value: '+91 ',
-    //   href: 'tel:+'
-    // },
-    {
-      icon: <MapPin className="w-6 h-6" />,
-      label: "Location",
-      value: "Remote / India",
-      href: null,
-    },
-  ];
-
   const socialLinks = [
-    {
-      icon: (
-        <img
-          src="/icons/github.png"
-          className="w-8 object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-      ),
-      label: "GitHub",
-      href: "https://github.com/ayush1944",
-      color: "hover:text-gray-900 dark:hover:text-white",
-    },
-    {
-      icon: (
-        <img
-          src="/icons/linkedIn.png"
-          className="w-8 object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-      ),
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/ayush-pal-25b628255/",
-      color: "hover:text-blue-600",
-    },
-    {
-      icon: (
-        <img
-          src="/icons/twitter.png"
-          className="w-8 object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-      ),
-      label: "Twitter",
-      href: "https://x.com/19yashu_",
-      color: "hover:text-blue-400",
-    },
-    {
-      icon: (
-        <img
-          src="/icons/message.png"
-          className="w-8 object-cover group-hover:scale-110 transition-transform duration-500"
-        />
-      ),
-      label: "Email",
-      href: "mailto:palayush930592@gmail.com",
-      color: "hover:text-red-500",
-    },
+    { label: "GitHub", href: "https://github.com/ayush1944" },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/ayush-pal-25b628255/" },
+    { label: "Twitter", href: "https://x.com/19yashu_" },
   ];
 
   return (
-    <section
-      id="contact"
-      className="section-padding bg-gray-50 dark:bg-gray-800"
-    >
+    <section id="contact" className="section-padding" style={{ background: 'var(--color-bg)' }}>
       <div className="container-custom">
-        <motion.div
+
+        {/* Label */}
+        <motion.span
           {...scrollAnimation}
           variants={fadeInUp}
-          className="text-center mb-16"
+          className="section-label"
         >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            Get In Touch
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Ready to start your next project? Let's discuss how we can work
-            together
-          </p>
+          [ 05 — CONTACT ]
+        </motion.span>
 
-          <p className="text-sm text-gray-500 dark:text-gray-500 max-w-2xl mx-auto">
-            This contact form is powered by a production Express API that stores
-            messages in PostgreSQL (Supabase) and sends real-time notifications
-            and auto-reply emails using Resend.
-          </p>
-        </motion.div>
+        {/* Giant heading */}
+        <motion.h2
+          {...scrollAnimation}
+          variants={fadeInUp}
+          className="font-display font-extrabold text-[clamp(2.5rem,8vw,90px)] text-ink leading-none mt-4 mb-4"
+        >
+          Let's Build<br />Something.
+        </motion.h2>
+
+        <motion.p
+          {...scrollAnimation}
+          variants={fadeInUp}
+          className="font-sans text-muted text-lg mb-16 max-w-md"
+        >
+          Have a project in mind? Let's talk.
+        </motion.p>
 
         <div className="grid lg:grid-cols-2 gap-16">
-          {/* Left Column - Contact Info */}
-          <motion.div
-            {...scrollAnimation}
-            variants={slideInLeft}
-            className="space-y-8"
-          >
+
+          {/* Left — email + socials */}
+          <motion.div {...scrollAnimation} variants={slideInLeft} className="space-y-10">
             <div>
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Let's Connect
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-8 leading-relaxed">
-                I'm always interested in hearing about new opportunities,
-                especially remote positions where I can contribute to innovative
-                projects and grow with a dynamic team. Feel free to reach out!
-              </p>
+              <p className="font-mono text-xs tracking-widest text-muted uppercase mb-4">Reach out directly</p>
+              <a
+                href="mailto:palayush930592@gmail.com"
+                className="font-display font-bold text-xl md:text-2xl text-ink hover:text-accent transition-colors duration-200 flex items-center gap-3 group"
+              >
+                palayush930592@gmail.com
+                <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-200">↗</span>
+              </a>
             </div>
 
-            {/* Contact Information */}
-            <div className="space-y-4">
-              {contactInfo.map((info, index) => (
-                <motion.div
-                  key={info.label}
-                  variants={fadeInUp}
-                  transition={{ delay: index * 0.1 }}
-                  className="flex items-center gap-4 p-4 bg-white dark:bg-gray-700 rounded-lg hover:shadow-md transition-shadow duration-300"
-                >
-                  <div className="p-2 bg-primary-100 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-lg">
-                    {info.icon}
-                  </div>
-                  <div>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {info.label}
-                    </p>
-                    {info.href ? (
-                      <a
-                        href={info.href}
-                        className="text-gray-900 dark:text-white font-medium hover:text-primary-600 dark:hover:text-primary-400 transition-colors duration-200"
-                      >
-                        {info.value}
-                      </a>
-                    ) : (
-                      <p className="text-gray-900 dark:text-white font-medium">
-                        {info.value}
-                      </p>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Social Links */}
             <div>
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                Follow Me
-              </h4>
-              <div className="flex gap-4">
-                {socialLinks.map((social, index) => (
-                  <motion.a
-                    key={social.label}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    href={social.href}
+              <p className="font-mono text-xs tracking-widest text-muted uppercase mb-4">Elsewhere</p>
+              <div className="space-y-3">
+                {socialLinks.map((s) => (
+                  <a
+                    key={s.label}
+                    href={s.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`p-3 bg-white dark:bg-gray-700 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 text-gray-600 dark:text-gray-400 ${social.color}`}
+                    className="flex items-center gap-3 font-sans text-muted hover:text-ink transition-colors duration-200 group"
                   >
-                    {social.icon}
-                  </motion.a>
+                    <span className="font-mono text-xs text-white/10 group-hover:text-accent transition-colors duration-200">↗</span>
+                    {s.label}
+                  </a>
                 ))}
               </div>
             </div>
+
+            <div className="flex items-center gap-2 pt-4">
+              <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+              <span className="font-mono text-xs tracking-wide text-muted">Available for remote work</span>
+            </div>
           </motion.div>
 
-          {/* Right Column - Contact Form */}
+          {/* Right — form */}
           <motion.div {...scrollAnimation} variants={slideInRight}>
-            <div className="card p-8">
-              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-                Send Message
-              </h3>
-
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <label
-                      htmlFor="name"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                    >
-                      Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={`input-field ${
-                        errors.name ? "border-red-500 focus:ring-red-500" : ""
-                      }`}
-                      placeholder="Your Name"
-                    />
-                    {errors.name && (
-                      <p className="text-red-500 text-sm mt-1">{errors.name}</p>
-                    )}
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="email"
-                      className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                    >
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      className={`input-field ${
-                        errors.email ? "border-red-500 focus:ring-red-500" : ""
-                      }`}
-                      placeholder="your.email@example.com"
-                    />
-                    {errors.email && (
-                      <p className="text-red-500 text-sm mt-1">
-                        {errors.email}
-                      </p>
-                    )}
-                  </div>
-                </div>
-
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid sm:grid-cols-2 gap-8">
                 <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                  >
-                    Subject
-                  </label>
+                  <label htmlFor="name" className="font-mono text-xs tracking-widest text-muted uppercase block mb-2">Name *</label>
                   <input
                     type="text"
-                    id="subject"
-                    name="subject"
-                    value={formData.subject}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
-                    className="input-field"
-                    placeholder="Project Discussion"
+                    className={`input-field ${errors.name ? "border-red-500" : ""}`}
+                    placeholder="Your name"
                   />
+                  {errors.name && <p className="text-red-500 text-xs mt-2 font-mono">{errors.name}</p>}
                 </div>
-
                 <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                  >
-                    Message *
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={6}
-                    type="text"
-                    value={formData.message}
+                  <label htmlFor="email" className="font-mono text-xs tracking-widest text-muted uppercase block mb-2">Email *</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
                     onChange={handleChange}
-                    className={`input-field resize-none ${
-                      errors.message ? "border-red-500 focus:ring-red-500" : ""
-                    }`}
-                    placeholder="Tell me about your project or opportunity..."
+                    className={`input-field ${errors.email ? "border-red-500" : ""}`}
+                    placeholder="your@email.com"
                   />
-                  {errors.message && (
-                    <p className="text-red-500 text-sm mt-1">
-                      {errors.message}
-                    </p>
-                  )}
+                  {errors.email && <p className="text-red-500 text-xs mt-2 font-mono">{errors.email}</p>}
                 </div>
+              </div>
 
-                <Button
-                  type="submit"
-                  loading={isSubmitting}
-                  disabled={isSubmitting}
-                  className="w-full"
-                  variant="primary"
-                >
-                  <Send size={20} />
-                  {isSubmitting ? "Sending..." : "Send Message"}
-                </Button>
-              </form>
-            </div>
+              <div>
+                <label htmlFor="subject" className="font-mono text-xs tracking-widest text-muted uppercase block mb-2">Subject</label>
+                <input
+                  type="text"
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  className="input-field"
+                  placeholder="Project idea, opportunity..."
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="font-mono text-xs tracking-widest text-muted uppercase block mb-2">Message *</label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows={5}
+                  value={formData.message}
+                  onChange={handleChange}
+                  className={`input-field resize-none ${errors.message ? "border-red-500" : ""}`}
+                  placeholder="Tell me about your project..."
+                />
+                {errors.message && <p className="text-red-500 text-xs mt-2 font-mono">{errors.message}</p>}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="btn-primary w-full justify-center text-sm"
+              >
+                <Send size={16} />
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </button>
+            </form>
           </motion.div>
         </div>
       </div>

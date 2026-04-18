@@ -1,154 +1,240 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Home, Code2, Briefcase, FileText, Sun, Moon, Github, Linkedin, Twitter } from 'lucide-react';
 import { useTheme } from '../contexts/ThemeContext';
 import { useScrollSpy } from '../hooks/useScrollSpy';
-import { useFocusTrap } from '../hooks/useKeyboardNavigation';
 
+const NAV_ITEMS = [
+  { id: 'home',     href: '#home',     icon: Home,      label: 'Home' },
+  { id: 'projects', href: '#projects', icon: Code2,     label: 'Projects' },
+  { id: 'resume',   href: '#resume',   icon: Briefcase, label: 'Experience' },
+  { id: 'contact',  href: '#contact',  icon: FileText,  label: 'Contact' },
+];
+
+const SOCIAL_ITEMS = [
+  { href: 'https://github.com/ayush1944',                     icon: Github,   label: 'GitHub' },
+  { href: 'https://www.linkedin.com/in/ayush-pal-25b628255/', icon: Linkedin, label: 'LinkedIn' },
+  { href: 'https://x.com/19yashu_',                          icon: Twitter,  label: 'Twitter' },
+];
+
+// ── Tooltip ───────────────────────────────────────────────────────
+const Tooltip = ({ label }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 4 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: 4 }}
+    transition={{ duration: 0.12 }}
+    className="absolute -top-9 left-1/2 -translate-x-1/2 whitespace-nowrap font-mono text-[10px] tracking-widest uppercase px-2 py-1 rounded pointer-events-none"
+    style={{
+      background: 'var(--color-surface)',
+      color: 'var(--color-muted)',
+      border: '1px solid var(--color-border)',
+    }}
+  >
+    {label}
+  </motion.div>
+);
+
+const DockItem = ({ item, isActive, onClick }) => {
+  const [hovered, setHovered] = useState(false);
+  const Icon = item.icon;
+  return (
+    <div className="relative flex flex-col items-center">
+      <AnimatePresence>{hovered && <Tooltip label={item.label} />}</AnimatePresence>
+      <motion.button
+        whileHover={{ scale: 1.2, y: -3 }}
+        whileTap={{ scale: 0.88 }}
+        onClick={onClick}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="p-2.5 rounded-xl transition-all duration-200"
+        style={{
+          background: isActive ? 'var(--color-accent)' : 'transparent',
+          color: isActive ? 'var(--color-bg)' : 'var(--color-muted)',
+        }}
+        aria-label={item.label}
+      >
+        <Icon size={17} />
+      </motion.button>
+      <AnimatePresence>
+        {isActive && (
+          <motion.span
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            className="w-1 h-1 rounded-full mt-0.5"
+            style={{ background: 'var(--color-accent)' }}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const SocialItem = ({ item }) => {
+  const [hovered, setHovered] = useState(false);
+  const Icon = item.icon;
+  return (
+    <div className="relative flex flex-col items-center">
+      <AnimatePresence>{hovered && <Tooltip label={item.label} />}</AnimatePresence>
+      <motion.a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        whileHover={{ scale: 1.2, y: -3 }}
+        whileTap={{ scale: 0.88 }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
+        className="p-2.5 rounded-xl transition-colors duration-200"
+        style={{ color: 'var(--color-muted)' }}
+        onMouseOver={(e) => (e.currentTarget.style.color = 'var(--color-ink)')}
+        onMouseOut={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
+        aria-label={item.label}
+      >
+        <Icon size={17} />
+      </motion.a>
+    </div>
+  );
+};
+
+// ── Main ──────────────────────────────────────────────────────────
 const Navbar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const { isDark, toggleTheme } = useTheme();
-  const activeSection = useScrollSpy(['home', 'about', 'skills', 'projects', 'contact']);
-  const mobileMenuRef = useRef(null);
-
-  useFocusTrap(isOpen, mobileMenuRef);
+  const activeSection = useScrollSpy(['home', 'about', 'skills', 'projects', 'resume', 'contact']);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const t = setTimeout(() => setMounted(true), 400);
+    return () => clearTimeout(t);
   }, []);
 
-  const navItems = [
-    { name: 'Home', href: '#home', id: 'home' },
-    { name: 'About', href: '#about', id: 'about' },
-    { name: 'Projects', href: '#projects', id: 'projects' },
-    { name: 'Resume', href: '#resume', id: 'resume' },
-    { name: 'Contact', href: '#contact', id: 'contact' },
-  ];
-
-  const scrollToSection = (href) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsOpen(false);
-  };
+  const scrollTo = (href) =>
+    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-lg'
-            : 'bg-transparent'
-        }`}
-        role="navigation"
-        aria-label="Main navigation"
+      {/* ── Top-left: </Yusho> signature ── */}
+      <motion.div
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+        className="fixed top-5 left-5 z-50"
       >
-      <div className="container-custom">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="text-2xl font-bold text-gradient cursor-pointer"
-            onClick={() => scrollToSection('#home')}
-          >
-            &lt;Avatar /&gt;
-          </motion.div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.name}
-                whileHover={{ y: -2 }}
-                onClick={() => scrollToSection(item.href)}
-                className={`relative font-medium transition-colors duration-200 ${
-                  activeSection === item.id
-                    ? 'text-primary-600 dark:text-primary-400'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400'
-                }`}
-              >
-                {item.name}
-                {activeSection === item.id && (
-                  <motion.div
-                    layoutId="activeSection"
-                    className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary-600 dark:bg-primary-400"
-                    initial={false}
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
-              </motion.button>
-            ))}
-            
-            {/* Theme Toggle */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors duration-200"
-              aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </motion.button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center space-x-4">
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={toggleTheme}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-              aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-            >
-              {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </motion.button>
-
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-lg bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300"
-              aria-label={isOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isOpen}
-              aria-controls="mobile-menu"
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <motion.div
-          ref={mobileMenuRef}
-          initial={false}
-          animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-          className="md:hidden overflow-hidden bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
-          id="mobile-menu"
-          role="menu"
-          aria-label="Mobile navigation menu"
+        <button
+          onClick={() => scrollTo('#home')}
+          className="font-mono text-sm font-bold tracking-tight transition-colors duration-200"
+          style={{ color: 'var(--color-muted)' }}
+          onMouseOver={(e) => (e.currentTarget.style.color = 'var(--color-accent)')}
+          onMouseOut={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
         >
-          <div className="py-4 space-y-2">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.name}
-                whileHover={{ x: 10 }}
-                onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200"
-              >
-                {item.name}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
-      </div>
-    </motion.nav>
+          &lt;/Yusho&gt;
+        </button>
+      </motion.div>
+
+      {/* ── Top-right: Resume + theme toggle ── */}
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.5, duration: 0.4 }}
+        className="fixed top-5 right-5 z-50 flex items-center gap-2"
+      >
+        {/* Resume button */}
+        <motion.a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.93 }}
+          className="h-9 px-4 rounded-full flex items-center font-mono text-[11px] tracking-widest uppercase transition-colors duration-200"
+          style={{
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            color: 'var(--color-muted)',
+            backdropFilter: 'blur(12px)',
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.color = 'var(--color-accent)';
+            e.currentTarget.style.borderColor = 'var(--color-accent)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.color = 'var(--color-muted)';
+            e.currentTarget.style.borderColor = 'var(--color-border)';
+          }}
+        >
+          Resume ↗
+        </motion.a>
+
+        {/* Theme toggle */}
+        <motion.button
+          whileHover={{ scale: 1.08 }}
+          whileTap={{ scale: 0.92 }}
+          onClick={toggleTheme}
+          className="w-9 h-9 rounded-full flex items-center justify-center"
+          style={{
+            background: 'var(--color-surface)',
+            border: '1px solid var(--color-border)',
+            color: 'var(--color-muted)',
+            backdropFilter: 'blur(12px)',
+          }}
+          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        >
+          <AnimatePresence mode="wait">
+            {isDark ? (
+              <motion.span key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.18 }}>
+                <Sun size={14} />
+              </motion.span>
+            ) : (
+              <motion.span key="moon" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.18 }}>
+                <Moon size={14} />
+              </motion.span>
+            )}
+          </AnimatePresence>
+        </motion.button>
+      </motion.div>
+
+      {/* ── Floating bottom dock — uses x transform via framer to avoid conflict ── */}
+      <AnimatePresence>
+        {mounted && (
+          <motion.div
+            initial={{ y: 120, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-5 z-50"
+            style={{
+              /* Centering via style avoids Tailwind translate conflicting with Framer's y animation */
+              left: '50%',
+              x: '-50%',
+            }}
+          >
+            <div
+              className="flex items-center gap-1 px-3 py-2 rounded-2xl"
+              style={{
+                background: isDark ? 'rgba(15,15,15,0.88)' : 'rgba(240,237,232,0.88)',
+                border: '1px solid var(--color-border)',
+                backdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(20px)',
+                boxShadow: isDark
+                  ? '0 8px 40px rgba(0,0,0,0.6), 0 0 0 0.5px rgba(255,255,255,0.06)'
+                  : '0 8px 40px rgba(0,0,0,0.1), 0 0 0 0.5px rgba(0,0,0,0.06)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {NAV_ITEMS.map((item) => (
+                <DockItem
+                  key={item.id}
+                  item={item}
+                  isActive={activeSection === item.id}
+                  onClick={() => scrollTo(item.href)}
+                />
+              ))}
+              <div className="w-px h-5 mx-1" style={{ background: 'var(--color-border)' }} />
+              {SOCIAL_ITEMS.map((item) => (
+                <SocialItem key={item.label} item={item} />
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
