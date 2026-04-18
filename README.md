@@ -1,5 +1,6 @@
 # Full-Stack Developer Portfolio
-<img width="1200" height="500" alt="Image" src="https://github.com/user-attachments/assets/a2813b3a-a9fa-43e9-ac70-1867bcdf041f" />
+<img width="2936" height="1676" alt="image" src="https://github.com/user-attachments/assets/48892cdf-08e1-4c25-a30b-4345d4758879" />
+
 
 A production-ready personal portfolio built to showcase real-world full-stack engineering skills.  
 This project goes beyond static UI — it includes a deployed backend, working contact API, email notifications, and clean frontend architecture.
