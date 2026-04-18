@@ -93,7 +93,7 @@ const Hero = () => {
         >
           <span
             ref={labelRef}
-            data-text="[ AI AUTOMATION · FULL-STACK DEVELOPER ]"
+            data-text="[ FULL-STACK DEVELOPER · AI AUTOMATION ENGINEER ]"
             className="section-label text-xs"
             aria-label="AI Automation · Full-Stack Developer"
           />
@@ -118,7 +118,7 @@ const Hero = () => {
             style={{
               fontSize: 'clamp(4rem, 13vw, 150px)',
               color: 'var(--color-ink)',
-              marginLeft: 'clamp(1.5rem, 5vw, 80px)',
+              marginLeft: 'clamp(1.4rem, 0vw, 80px)',
             }}
           >
             PAL

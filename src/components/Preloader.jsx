@@ -20,7 +20,7 @@ const Preloader = ({ onComplete }) => {
 
   useEffect(() => {
     startRef.current = performance.now();
-    const DURATION = 5500; // total preloader duration ms
+    const DURATION = 3500; // total preloader duration ms
 
     const tick = (now) => {
       const elapsed = now - startRef.current;

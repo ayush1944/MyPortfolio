@@ -29,9 +29,9 @@ const StarField = () => {
     let comets = [];
 
     const spawnComet = () => {
-      const edge  = Math.floor(Math.random() * 4);
+      const edge  = Math.floor(Math.random() * 2);
       // Slower speed: 0.7–2.0
-      const speed = Math.random() * 1.3 + 0.7;
+      const speed = Math.random() * 1.8 + 0.7;
       const angle = (Math.random() - 0.5) * 0.55;
       let x, y, vx, vy;
 
@@ -49,14 +49,14 @@ const StarField = () => {
     };
 
     // Start with 3 comets
-    for (let i = 0; i < 3; i++) comets.push(spawnComet());
+    for (let i = 0; i < 1; i++) comets.push(spawnComet());
 
     // ── Click bursts ──────────────────────────────────────────────
     let bursts = [];
 
     const onClick = (e) => {
       // 35 star particles burst from click point
-      const newParticles = Array.from({ length: 35 }, () => {
+      const newParticles = Array.from({ length: 30 }, () => {
         const a = Math.random() * Math.PI * 2;
         const s = Math.random() * 5 + 1.5;
         return {
