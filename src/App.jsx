@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAnalytics } from './hooks/useAnalytics';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { ToastProvider } from './components/ui/Toast';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -16,6 +17,15 @@ import Preloader from './components/Preloader';
 
 function App() {
   const [preloaderDone, setPreloaderDone] = useState(false);
+  const { track } = useAnalytics();
+
+  useEffect(() => {
+    track('page_view', {
+      referrer: document.referrer || null,
+      screen_width: window.screen.width,
+      screen_height: window.screen.height,
+    });
+  }, []);
 
   return (
     <ErrorBoundary>

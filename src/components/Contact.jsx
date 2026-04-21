@@ -5,12 +5,14 @@ import { SOCIAL_LINKS } from "../data/social";
 import { validateForm, sanitizeInput } from "../utils/validation";
 import { fadeInUp, slideInLeft, slideInRight, useScrollAnimation } from "../utils/animations";
 import { useToast } from "./ui/Toast";
+import { useAnalytics } from "../hooks/useAnalytics";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { track } = useAnalytics();
   const scrollAnimation = useScrollAnimation();
 
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
@@ -42,6 +44,7 @@ const Contact = () => {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       toast.success("Message sent! I'll get back to you soon.", { title: "Sent!" });
+      track('contact_submit', { has_subject: !!sanitized.subject });
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch {
       toast.error("Something went wrong. Please try again.", { title: "Error" });

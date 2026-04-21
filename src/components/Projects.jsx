@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { projects } from "../data/projects";
 import { GITHUB_URL } from "../data/social";
+import { useAnalytics } from "../hooks/useAnalytics";
 import { fadeInUp, useScrollAnimation } from "../utils/animations";
 import ProjectModal from "./ProjectModal";
 
@@ -186,6 +187,7 @@ const ProjectRow = ({ project, index, onClick }) => {
 const Projects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const scrollAnimation = useScrollAnimation();
+  const { track } = useAnalytics();
 
   return (
     <section id="projects" className="section-padding" style={{ background: "var(--color-bg)" }}>
@@ -216,7 +218,7 @@ const Projects = () => {
               key={project.id}
               project={project}
               index={index}
-              onClick={() => setSelectedProject(project)}
+              onClick={() => { setSelectedProject(project); track('project_click', { title: project.title, year: project.year }); }}
             />
           ))}
           <div className="border-t" style={{ borderColor: "var(--color-border)" }} />
