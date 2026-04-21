@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Send } from "lucide-react";
+import { SOCIAL_LINKS } from "../data/social";
 import { validateForm, sanitizeInput } from "../utils/validation";
 import { fadeInUp, slideInLeft, slideInRight, useScrollAnimation } from "../utils/animations";
 import { useToast } from "./ui/Toast";
@@ -34,12 +35,12 @@ const Contact = () => {
     setIsSubmitting(true);
     setErrors({});
     try {
-      await new Promise((r) => setTimeout(r, 2000));
-      await fetch(`${API_URL}/api/contact`, {
+      const res = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(sanitized),
       });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       toast.success("Message sent! I'll get back to you soon.", { title: "Sent!" });
       setFormData({ name: "", email: "", subject: "", message: "" });
     } catch {
@@ -48,12 +49,6 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-
-  const socialLinks = [
-    { label: "GitHub", href: "https://github.com/ayush1944" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/ayush-pal-25b628255/" },
-    { label: "Twitter", href: "https://x.com/19yashu_" },
-  ];
 
   return (
     <section id="contact" className="section-padding" style={{ background: 'var(--color-bg)' }}>
@@ -103,18 +98,24 @@ const Contact = () => {
             <div>
               <p className="font-mono text-xs tracking-widest text-muted uppercase mb-4">Elsewhere</p>
               <div className="space-y-3">
-                {socialLinks.map((s) => (
-                  <a
-                    key={s.label}
-                    href={s.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 font-sans text-muted hover:text-ink transition-colors duration-200 group"
-                  >
-                    <span className="font-mono text-xs text-white/10 group-hover:text-accent transition-colors duration-200">↗</span>
-                    {s.label}
-                  </a>
-                ))}
+                {SOCIAL_LINKS.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <a
+                      key={s.label}
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-3 font-sans text-sm transition-colors duration-200"
+                      style={{ color: "var(--color-muted)" }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = "var(--color-ink)")}
+                      onMouseOut={(e)  => (e.currentTarget.style.color = "var(--color-muted)")}
+                    >
+                      <Icon size={18} />
+                      {s.label}
+                    </a>
+                  );
+                })}
               </div>
             </div>
 

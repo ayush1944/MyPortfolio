@@ -1,21 +1,19 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Code2, Briefcase, FileText, Sun, Moon, Github, Linkedin, Twitter } from 'lucide-react';
+import { Home, User, Cpu, Code2, Briefcase, FileText, Sun, Moon } from 'lucide-react';
+import { SOCIAL_LINKS } from '../data/social';
 import { useTheme } from '../contexts/ThemeContext';
 import { useScrollSpy } from '../hooks/useScrollSpy';
 
 const NAV_ITEMS = [
-  { id: 'home',     href: '#home',     icon: Home,      label: 'Home' },
-  { id: 'projects', href: '#projects', icon: Code2,     label: 'Projects' },
+  { id: 'home',     href: '#home',     icon: Home,      label: 'Home'       },
+  { id: 'about',    href: '#about',    icon: User,      label: 'About'      },
+  { id: 'skills',   href: '#skills',   icon: Cpu,       label: 'Stack'      },
+  { id: 'projects', href: '#projects', icon: Code2,     label: 'Projects'   },
   { id: 'resume',   href: '#resume',   icon: Briefcase, label: 'Experience' },
-  { id: 'contact',  href: '#contact',  icon: FileText,  label: 'Contact' },
+  { id: 'contact',  href: '#contact',  icon: FileText,  label: 'Contact'    },
 ];
 
-const SOCIAL_ITEMS = [
-  { href: 'https://github.com/ayush1944',                     icon: Github,   label: 'GitHub' },
-  { href: 'https://www.linkedin.com/in/ayush-pal-25b628255/', icon: Linkedin, label: 'LinkedIn' },
-  { href: 'https://x.com/19yashu_',                          icon: Twitter,  label: 'Twitter' },
-];
 
 // ── Tooltip ───────────────────────────────────────────────────────
 const Tooltip = ({ label }) => (
@@ -47,14 +45,14 @@ const DockItem = ({ item, isActive, onClick }) => {
         onClick={onClick}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="p-2.5 rounded-xl transition-all duration-200"
+        className="p-3 rounded-xl transition-all duration-200"
         style={{
           background: isActive ? 'var(--color-accent)' : 'transparent',
           color: isActive ? 'var(--color-bg)' : 'var(--color-muted)',
         }}
         aria-label={item.label}
       >
-        <Icon size={17} />
+        <Icon size={21} />
       </motion.button>
       <AnimatePresence>
         {isActive && (
@@ -85,13 +83,13 @@ const SocialItem = ({ item }) => {
         whileTap={{ scale: 0.88 }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        className="p-2.5 rounded-xl transition-colors duration-200"
+        className="p-3 rounded-xl transition-colors duration-200"
         style={{ color: 'var(--color-muted)' }}
         onMouseOver={(e) => (e.currentTarget.style.color = 'var(--color-ink)')}
         onMouseOut={(e) => (e.currentTarget.style.color = 'var(--color-muted)')}
         aria-label={item.label}
       >
-        <Icon size={17} />
+        <Icon size={21} />
       </motion.a>
     </div>
   );
@@ -145,7 +143,7 @@ const Navbar = () => {
           rel="noopener noreferrer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.93 }}
-          className="h-9 px-4 rounded-full flex items-center font-mono text-[11px] tracking-widest uppercase transition-colors duration-200"
+          className="h-11 px-5 rounded-full flex items-center font-mono text-[11px] tracking-widest uppercase transition-colors duration-200"
           style={{
             background: 'var(--color-surface)',
             border: '1px solid var(--color-border)',
@@ -169,7 +167,7 @@ const Navbar = () => {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
           onClick={toggleTheme}
-          className="w-9 h-9 rounded-full flex items-center justify-center"
+          className="w-11 h-11 rounded-full flex items-center justify-center"
           style={{
             background: 'var(--color-surface)',
             border: '1px solid var(--color-border)',
@@ -181,11 +179,11 @@ const Navbar = () => {
           <AnimatePresence mode="wait">
             {isDark ? (
               <motion.span key="sun" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.18 }}>
-                <Sun size={14} />
+                <Sun size={17} />
               </motion.span>
             ) : (
               <motion.span key="moon" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.18 }}>
-                <Moon size={14} />
+                <Moon size={17} />
               </motion.span>
             )}
           </AnimatePresence>
@@ -207,7 +205,7 @@ const Navbar = () => {
             }}
           >
             <div
-              className="flex items-center gap-1 px-3 py-2 rounded-2xl"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl"
               style={{
                 background: isDark ? 'rgba(15,15,15,0.88)' : 'rgba(240,237,232,0.88)',
                 border: '1px solid var(--color-border)',
@@ -228,7 +226,7 @@ const Navbar = () => {
                 />
               ))}
               <div className="w-px h-5 mx-1" style={{ background: 'var(--color-border)' }} />
-              {SOCIAL_ITEMS.map((item) => (
+              {SOCIAL_LINKS.map((item) => (
                 <SocialItem key={item.label} item={item} />
               ))}
             </div>

@@ -10,7 +10,7 @@
   --color-ink:     #1c1508;
   --color-muted:   #7c6b50;
   --color-accent:  #1a6b3f;
-  --color-border:  rgba(28, 21, 8, 0.1);
+  --color-border:  rgba(28, 21, 8, 0.15);
 }
 
 .dark {
@@ -19,7 +19,7 @@
   --color-ink:     #f0ede8;
   --color-muted:   #6b6b6b;
   --color-accent:  #6bffc6;
-  --color-border:  rgba(255, 255, 255, 0.08);
+  --color-border:  rgba(255, 255, 255, 0.12);
 }
 
 /* ── Base ──────────────────────────────────────────────────────── */

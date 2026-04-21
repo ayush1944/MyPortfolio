@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence, useMotionValue } from "framer-motion";
 import { projects } from "../data/projects";
+import { GITHUB_URL } from "../data/social";
 import { fadeInUp, useScrollAnimation } from "../utils/animations";
 import ProjectModal from "./ProjectModal";
 
@@ -45,6 +46,7 @@ const FloatingThumb = ({ project, hovered, x, y, tiltMV }) => {
           <img
             src={project.image}
             alt={project.title}
+            loading="lazy"
             style={{ width: "100%", height: "100%", objectFit: "cover", transform: "scale(1.05)" }}
           />
 
@@ -230,7 +232,7 @@ const Projects = () => {
           </p>
           <motion.a
             whileHover={{ x: 4 }}
-            href="https://github.com/ayush1944"
+            href={GITHUB_URL}
             target="_blank"
             rel="noopener noreferrer"
             className="btn-outline text-sm"

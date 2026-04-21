@@ -23,11 +23,6 @@ const CustomCursor = () => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
 
-    // ── Inject global cursor:none so buttons/links don't override ──
-    const styleEl = document.createElement('style');
-    styleEl.textContent = `*, *::before, *::after { cursor: none !important; }`;
-    document.head.appendChild(styleEl);
-
     let W = window.innerWidth;
     let H = window.innerHeight;
     canvas.width = W;
@@ -179,8 +174,6 @@ const CustomCursor = () => {
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('click', onClick);
       cancelAnimationFrame(raf);
-      // Remove injected style
-      if (styleEl.parentNode) styleEl.parentNode.removeChild(styleEl);
     };
   }, []);
 
@@ -197,5 +190,4 @@ const CustomCursor = () => {
   );
 };
 
-export const useMagneticHover = () => ({ current: null });
 export default CustomCursor;

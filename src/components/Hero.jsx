@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { useTypingEffect } from '../hooks/useTypingEffect';
 import { useTheme } from '../contexts/ThemeContext';
+import { SOCIAL_LINKS, EMAIL } from '../data/social';
 
 const ROLES = [
   'AI Automation Engineer',
@@ -189,9 +190,9 @@ const Hero = () => {
               className="flex gap-5"
             >
               {[
-                { label: 'GitHub ↗',   href: 'https://github.com/ayush1944' },
-                { label: 'LinkedIn ↗', href: 'https://www.linkedin.com/in/ayush-pal-25b628255/' },
-                { label: 'Email ↗',    href: 'mailto:palayush930592@gmail.com' },
+                { label: 'GitHub ↗',   href: SOCIAL_LINKS[0].href },
+                { label: 'LinkedIn ↗', href: SOCIAL_LINKS[1].href },
+                { label: 'Email ↗',    href: `mailto:${EMAIL}` },
               ].map((l) => (
                 <a
                   key={l.label}
