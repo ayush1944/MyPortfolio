@@ -19,20 +19,26 @@ const ProjectModal = ({ project, onClose }) => {
           exit={{ y: 40, opacity: 0, scale: 0.95 }}
           transition={{ duration: 0.3, ease: "easeOut" }}
           onClick={(e) => e.stopPropagation()}
-          className="relative w-full max-w-3xl mx-4 overflow-hidden rounded-2xl 
-                     bg-white dark:bg-gray-900 shadow-2xl"
+          className="relative w-full max-w-3xl mx-4 overflow-hidden rounded-2xl shadow-2xl"
+          style={{ background: 'var(--color-surface)' }}
         >
-          {/* Close */}
+          {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 z-10 p-2 rounded-full 
-                       bg-black/50 text-white hover:bg-black/70 transition"
+            className="absolute top-4 right-4 z-10 p-2 rounded-full transition-colors duration-200"
+            style={{
+              background: 'var(--color-surface)',
+              border: '1px solid var(--color-border)',
+              color: 'var(--color-muted)',
+            }}
+            onMouseOver={(e) => { e.currentTarget.style.color = 'var(--color-ink)'; }}
+            onMouseOut={(e)  => { e.currentTarget.style.color = 'var(--color-muted)'; }}
           >
             <X size={18} />
           </button>
 
-          {/* Image */}
-          <div className="relative h-56 bg-gray-100 dark:bg-gray-800">
+          {/* Image header */}
+          <div className="relative h-56 overflow-hidden" style={{ background: 'var(--color-bg)' }}>
             {project.image ? (
               <img
                 src={project.image}
@@ -40,7 +46,10 @@ const ProjectModal = ({ project, onClose }) => {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="flex items-center justify-center h-full text-6xl opacity-40">
+              <div
+                className="flex items-center justify-center h-full text-6xl"
+                style={{ opacity: 0.3 }}
+              >
                 💻
               </div>
             )}
@@ -49,55 +58,113 @@ const ProjectModal = ({ project, onClose }) => {
 
           {/* Content */}
           <div className="p-6 md:p-8">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
+
+            {/* Category + featured row */}
+            <div className="flex items-center gap-3 mb-3">
+              <span
+                className="font-mono text-[10px] tracking-widest uppercase"
+                style={{ color: 'var(--color-muted)' }}
+              >
+                {project.category}
+              </span>
+              {project.featured && (
+                <span
+                  className="font-mono text-[10px] tracking-widest uppercase px-2 py-0.5 rounded"
+                  style={{ color: 'var(--color-accent)', border: '1px solid var(--color-accent)', opacity: 0.8 }}
+                >
+                  ★ Featured
+                </span>
+              )}
+              {project.year && (
+                <span
+                  className="font-mono text-[10px] tracking-widest"
+                  style={{ color: 'var(--color-muted)', opacity: 0.6 }}
+                >
+                  {project.year}
+                </span>
+              )}
+            </div>
+
+            {/* Title */}
+            <h2
+              className="font-display font-bold text-2xl md:text-3xl mb-3"
+              style={{ color: 'var(--color-ink)' }}
+            >
               {project.title}
             </h2>
 
-            <p className="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+            {/* Description */}
+            <p
+              className="font-sans text-sm leading-relaxed mb-6"
+              style={{ color: 'var(--color-muted)' }}
+            >
               {project.description}
             </p>
 
             {/* Highlights */}
             {project.highlights?.length > 0 && (
-              <div className="mb-6">
-                <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                  Key Highlights
-                </h4>
-                <ul className="list-disc pl-5 space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                  {project.highlights.map((item, i) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </div>
+              <>
+                <div className="border-t mb-5" style={{ borderColor: 'var(--color-border)' }} />
+                <div className="mb-5">
+                  <p
+                    className="font-mono text-[10px] tracking-widest uppercase mb-3"
+                    style={{ color: 'var(--color-muted)' }}
+                  >
+                    Key Highlights
+                  </p>
+                  <ul className="space-y-2">
+                    {project.highlights.map((item, i) => (
+                      <li key={i} className="flex items-start gap-2 font-sans text-sm" style={{ color: 'var(--color-muted)' }}>
+                        <span className="font-mono text-xs shrink-0 mt-0.5" style={{ color: 'var(--color-accent)' }}>✦</span>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
             )}
 
-            {/* Tech Stack */}
+            {/* Tech stack */}
+            <div className="border-t mb-6" style={{ borderColor: 'var(--color-border)' }} />
             <div className="flex flex-wrap gap-2 mb-8">
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="px-3 py-1 text-xs rounded-full 
-                             bg-primary-100 dark:bg-primary-900/30
-                             text-primary-600 dark:text-primary-400"
+                  className="px-3 py-1 text-[11px] font-mono tracking-wide rounded-full transition-colors duration-200"
+                  style={{ border: '1px solid var(--color-border)', color: 'var(--color-muted)' }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.color = 'var(--color-accent)';
+                    e.currentTarget.style.borderColor = 'var(--color-accent)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.color = 'var(--color-muted)';
+                    e.currentTarget.style.borderColor = 'var(--color-border)';
+                  }}
                 >
                   {tech}
                 </span>
               ))}
             </div>
 
-            {/* Actions */}
-            <div className="flex gap-4">
+            {/* Action buttons */}
+            <div className="flex gap-3">
               {project.githubUrl && (
                 <a
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl
-                             bg-gray-100 dark:bg-gray-800
-                             text-gray-800 dark:text-gray-200
-                             hover:scale-[1.03] transition"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-mono text-sm tracking-wide transition-colors duration-200"
+                  style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--color-accent)';
+                    e.currentTarget.style.color = 'var(--color-accent)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.borderColor = 'var(--color-border)';
+                    e.currentTarget.style.color = 'var(--color-ink)';
+                  }}
                 >
-                  <Github size={18} /> Code
+                  <Github size={16} /> Code
                 </a>
               )}
               {project.liveUrl && (
@@ -105,11 +172,10 @@ const ProjectModal = ({ project, onClose }) => {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl
-                             bg-primary-600 text-white
-                             hover:bg-primary-700 hover:scale-[1.03] transition"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-mono text-sm tracking-wide transition-opacity duration-200 hover:opacity-85"
+                  style={{ background: 'var(--color-accent)', color: '#050505' }}
                 >
-                  <ExternalLink size={18} /> Live Demo
+                  <ExternalLink size={16} /> Live Demo
                 </a>
               )}
             </div>

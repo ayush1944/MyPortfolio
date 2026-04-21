@@ -1,19 +1,21 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const Marquee = ({ items, reverse = false, speed = 30 }) => {
   const [paused, setPaused] = useState(false);
-
-  const animClass = reverse
-    ? "animate-marquee-reverse"
-    : "animate-marquee";
+  const animClass = reverse ? "animate-marquee-reverse" : "animate-marquee";
 
   return (
     <div
       className="marquee-track overflow-hidden"
+      style={{
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+        maskImage:
+          "linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)",
+      }}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Two copies for seamless loop */}
       {[0, 1].map((copy) => (
         <div
           key={copy}
@@ -24,21 +26,25 @@ const Marquee = ({ items, reverse = false, speed = 30 }) => {
           }}
         >
           {items.map((item, i) => (
-            <div
-              key={i}
-              className="flex items-center gap-4 group"
-            >
+            <div key={i} className="flex items-center gap-3 group">
               {item.icon && (
                 <img
                   src={item.icon}
                   alt={item.name}
-                  className="w-5 h-5 object-contain opacity-50 group-hover:opacity-100 transition-opacity duration-200"
+                  className="w-7 h-7 object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-200"
                 />
               )}
-              <span className="font-mono text-sm tracking-wide text-muted group-hover:text-accent whitespace-nowrap transition-colors duration-200">
+              <span
+                className="font-mono text-sm tracking-wide whitespace-nowrap transition-colors duration-200"
+                style={{ color: "var(--color-muted)" }}
+                onMouseOver={(e) => (e.currentTarget.style.color = "var(--color-accent)")}
+                onMouseOut={(e)  => (e.currentTarget.style.color = "var(--color-muted)")}
+              >
                 {item.name}
               </span>
-              <span className="text-white/10 text-xs">—</span>
+              <span className="text-xs select-none" style={{ color: "var(--color-border)" }}>
+                ·
+              </span>
             </div>
           ))}
         </div>

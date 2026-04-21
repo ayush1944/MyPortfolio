@@ -26,6 +26,7 @@ export const projects = [
     liveUrl: "https://www.prefyne.tech",
     featured: true,
     category: "Full Stack",
+    year: 2026,
   },
   {
     id: 2,
@@ -43,6 +44,7 @@ export const projects = [
     liveUrl: "https://nakli-zon-9oup.vercel.app/",
     featured: true,
     category: "Full Stack",
+    year: 2025,
   },
   {
     id: 3,
@@ -67,10 +69,11 @@ export const projects = [
     liveUrl: "https://kabutar-beta.vercel.app",
     featured: false,
     category: "Full Stack",
+    year: 2025,
   },
   {
     id: 4,
-    title: "Chota Link",
+    title: "Crisp-Link",
     description:
       "A URL shortening and link management platform with analytics.",
     highlights: [
@@ -84,10 +87,11 @@ export const projects = [
     liveUrl: "https://chota-link-nwgu.vercel.app/",
     featured: true,
     category: "Full Stack",
+    year: 2025,
   },
   {
     id: 5,
-    title: "Weather App",
+    title: "Weather.io (Weather App)",
     description:
       "A frontend weather app fetching real-time data from external APIs.",
     highlights: [
@@ -101,6 +105,7 @@ export const projects = [
     liveUrl: "https://ayush1944.github.io/WeatherApp/",
     featured: false,
     category: "Frontend",
+    year: 2024,
   },
   {
     id: 6,
@@ -117,6 +122,7 @@ export const projects = [
     liveUrl: "https://ayush1944.github.io/IPL/",
     featured: false,
     category: "Frontend",
+    year: 2024,
   },
 ];
 
