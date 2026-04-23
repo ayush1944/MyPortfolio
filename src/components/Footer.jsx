@@ -34,7 +34,7 @@ const Footer = () => {
               className="font-mono text-[10px] tracking-widest uppercase mt-1.5"
               style={{ color: "var(--color-muted)" }}
             >
-              Full-Stack Developer &amp; AI Builder
+              Full-Stack Developer &amp; AI Autimation Engineer
             </p>
           </div>
 

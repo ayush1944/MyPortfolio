@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, User, Cpu, Code2, Briefcase, FileText, Sun, Moon } from 'lucide-react';
+import { Home, User, Cpu, Code2, Briefcase, FileText, Sun, Moon, Menu, X } from 'lucide-react';
 import { SOCIAL_LINKS } from '../data/social';
 import { useTheme } from '../contexts/ThemeContext';
 import { useScrollSpy } from '../hooks/useScrollSpy';
@@ -14,8 +14,7 @@ const NAV_ITEMS = [
   { id: 'contact',  href: '#contact',  icon: FileText,  label: 'Contact'    },
 ];
 
-
-// ── Tooltip ───────────────────────────────────────────────────────
+// ── Tooltip (desktop only) ────────────────────────────────────────
 const Tooltip = ({ label }) => (
   <motion.div
     initial={{ opacity: 0, y: 4 }}
@@ -95,11 +94,120 @@ const SocialItem = ({ item }) => {
   );
 };
 
+// ── Mobile menu sheet ─────────────────────────────────────────────
+const MobileMenu = ({ isOpen, onClose, activeSection, scrollTo, isDark, toggleTheme }) => (
+  <AnimatePresence>
+    {isOpen && (
+      <>
+        {/* Backdrop */}
+        <motion.div
+          key="backdrop"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+          className="fixed inset-0 z-40"
+          style={{ background: 'rgba(0,0,0,0.55)', backdropFilter: 'blur(4px)' }}
+          onClick={onClose}
+        />
+
+        {/* Sheet */}
+        <motion.div
+          key="sheet"
+          initial={{ y: '100%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          className="fixed bottom-0 left-0 right-0 z-50 rounded-t-2xl px-6 pt-5 pb-10"
+          style={{
+            background: isDark ? 'rgba(12,12,12,0.97)' : 'rgba(245,230,200,0.97)',
+            border: '1px solid var(--color-border)',
+            borderBottom: 'none',
+            backdropFilter: 'blur(20px)',
+          }}
+        >
+          {/* Handle + close */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="w-10 h-1 rounded-full mx-auto" style={{ background: 'var(--color-border)' }} />
+            <button
+              onClick={onClose}
+              className="p-2 rounded-lg ml-auto"
+              style={{ color: 'var(--color-muted)' }}
+            >
+              <X size={18} />
+            </button>
+          </div>
+
+          {/* Nav rows */}
+          <nav className="space-y-1 mb-6">
+            {NAV_ITEMS.map((item) => {
+              const Icon = item.icon;
+              const active = activeSection === item.id;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => { scrollTo(item.href); onClose(); }}
+                  className="w-full flex items-center gap-4 px-4 py-3.5 rounded-xl transition-colors duration-150"
+                  style={{
+                    background: active ? 'var(--color-accent)' : 'transparent',
+                    color: active ? 'var(--color-bg)' : 'var(--color-muted)',
+                  }}
+                >
+                  <Icon size={18} />
+                  <span className="font-mono text-sm tracking-wide">{item.label}</span>
+                  {active && (
+                    <span className="ml-auto font-mono text-[10px] tracking-widest uppercase opacity-60">
+                      Active
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Divider */}
+          <div className="mb-5" style={{ borderTop: '1px solid var(--color-border)' }} />
+
+          {/* Social + theme row */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {SOCIAL_LINKS.map((s) => {
+                const Icon = s.icon;
+                return (
+                  <a
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="p-2.5 rounded-lg transition-colors duration-150"
+                    style={{ color: 'var(--color-muted)' }}
+                    aria-label={s.label}
+                  >
+                    <Icon size={18} />
+                  </a>
+                );
+              })}
+            </div>
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 rounded-lg"
+              style={{ color: 'var(--color-muted)', border: '1px solid var(--color-border)' }}
+            >
+              {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            </button>
+          </div>
+        </motion.div>
+      </>
+    )}
+  </AnimatePresence>
+);
+
 // ── Main ──────────────────────────────────────────────────────────
 const Navbar = () => {
   const { isDark, toggleTheme } = useTheme();
   const activeSection = useScrollSpy(['home', 'about', 'skills', 'projects', 'resume', 'contact']);
   const [mounted, setMounted] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const t = setTimeout(() => setMounted(true), 400);
@@ -129,14 +237,13 @@ const Navbar = () => {
         </button>
       </motion.div>
 
-      {/* ── Top-right: Resume + theme toggle ── */}
+      {/* ── Top-right: Resume + theme toggle (desktop only) ── */}
       <motion.div
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.5, duration: 0.4 }}
-        className="fixed top-5 right-5 z-50 flex items-center gap-2"
+        className="hidden sm:flex fixed top-5 right-5 z-50 items-center gap-2"
       >
-        {/* Resume button */}
         <motion.a
           href="/resume.pdf"
           target="_blank"
@@ -162,7 +269,6 @@ const Navbar = () => {
           Resume ↗
         </motion.a>
 
-        {/* Theme toggle */}
         <motion.button
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
@@ -190,19 +296,15 @@ const Navbar = () => {
         </motion.button>
       </motion.div>
 
-      {/* ── Floating bottom dock — uses x transform via framer to avoid conflict ── */}
+      {/* ── Desktop floating bottom dock ── */}
       <AnimatePresence>
         {mounted && (
           <motion.div
             initial={{ y: 120, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-5 z-50"
-            style={{
-              /* Centering via style avoids Tailwind translate conflicting with Framer's y animation */
-              left: '50%',
-              x: '-50%',
-            }}
+            className="hidden sm:block fixed bottom-5 z-50"
+            style={{ left: '50%', x: '-50%' }}
           >
             <div
               className="flex items-center gap-1.5 px-4 py-2.5 rounded-2xl"
@@ -233,6 +335,41 @@ const Navbar = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── Mobile menu button ── */}
+      <AnimatePresence>
+        {mounted && (
+          <motion.button
+            initial={{ y: 80, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+            onClick={() => setMobileOpen(true)}
+            className="sm:hidden fixed bottom-6 right-6 z-50 w-14 h-14 rounded-2xl flex items-center justify-center"
+            style={{
+              background: isDark ? 'rgba(15,15,15,0.92)' : 'rgba(240,237,232,0.92)',
+              border: '1px solid var(--color-border)',
+              backdropFilter: 'blur(20px)',
+              boxShadow: isDark
+                ? '0 8px 32px rgba(0,0,0,0.6)'
+                : '0 8px 32px rgba(0,0,0,0.12)',
+              color: 'var(--color-muted)',
+            }}
+            aria-label="Open menu"
+          >
+            <Menu size={22} />
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* ── Mobile menu sheet ── */}
+      <MobileMenu
+        isOpen={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        activeSection={activeSection}
+        scrollTo={scrollTo}
+        isDark={isDark}
+        toggleTheme={toggleTheme}
+      />
     </>
   );
 };

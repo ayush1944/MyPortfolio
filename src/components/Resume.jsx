@@ -5,10 +5,10 @@ import { fadeInUp, slideInLeft, slideInRight, staggerItem, useScrollAnimation } 
 // Reverse-chronological order
 const education = [
   {
-    period:  "2022 — May 2026",
-    degree:  "B.Tech — Electronics & Communications",
+    period:  "2022 —  2026",
+    degree:  "B.Tech",
     school:  "JSSATE Noida",
-    note:    "Ongoing",
+    note:    null,
   },
   {
     period:  "2021",
@@ -42,7 +42,15 @@ const Resume = () => {
   const handleView = () => window.open("/resume.pdf", "_blank");
 
   return (
-    <section id="resume" className="section-padding" style={{ background: "var(--color-surface)" }}>
+    <section
+      id="resume"
+      className="section-padding"
+      style={{
+        background: "var(--color-surface)",
+        borderTop: "2px solid var(--color-accent)",
+        boxShadow: "0 -6px 40px color-mix(in srgb, var(--color-accent) 12%, transparent)",
+      }}
+    >
       <div className="container-custom">
 
         {/* Header */}
