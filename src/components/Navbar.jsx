@@ -253,17 +253,17 @@ const Navbar = () => {
           className="h-11 px-5 rounded-full flex items-center font-mono text-[11px] tracking-widest uppercase transition-colors duration-200"
           style={{
             background: 'var(--color-surface)',
-            border: '1px solid var(--color-border)',
-            color: 'var(--color-muted)',
+            border: '1.5px solid var(--color-accent)',
+            color: 'var(--color-accent)',
             backdropFilter: 'blur(12px)',
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.color = 'var(--color-accent)';
-            e.currentTarget.style.borderColor = 'var(--color-accent)';
+            e.currentTarget.style.background = 'var(--color-accent)';
+            e.currentTarget.style.color = 'var(--color-bg)';
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.color = 'var(--color-muted)';
-            e.currentTarget.style.borderColor = 'var(--color-border)';
+            e.currentTarget.style.background = 'var(--color-surface)';
+            e.currentTarget.style.color = 'var(--color-accent)';
           }}
         >
           Resume ↗

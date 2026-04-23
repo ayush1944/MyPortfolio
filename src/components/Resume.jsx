@@ -42,15 +42,7 @@ const Resume = () => {
   const handleView = () => window.open("/resume.pdf", "_blank");
 
   return (
-    <section
-      id="resume"
-      className="section-padding"
-      style={{
-        background: "var(--color-surface)",
-        borderTop: "2px solid var(--color-accent)",
-        boxShadow: "0 -6px 40px color-mix(in srgb, var(--color-accent) 12%, transparent)",
-      }}
-    >
+    <section id="resume" className="section-padding" style={{ background: "var(--color-surface)" }}>
       <div className="container-custom">
 
         {/* Header */}
